@@ -1,24 +1,32 @@
 # Ideogram (ideogram)
 
-Ideogram is an image generation platform notable for its industry-leading text-in-image rendering. Public APIs available for the Ideogram 3.0 family.
+Ideogram is an image generation platform notable for industry-leading text-in-image rendering. The Ideogram API supports generation, edit, inpaint, remix, reframe, replace background, layerize text, upscale, describe, and remove background, plus custom model training with dataset and asset management.
 
-**URL:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml)
+**APIs.json:** [Visit APIs.json URL](https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml)
 
 ## Type
 - **x-type:** company
 
 ## Tags
- - AI, Image Generation, Text, Realistic, Replicate
+- AI, Image Generation, Text, Realistic, Editing
 
-## Timestamps
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-08
+## APIs
+1. **Ideogram API** — REST API at `https://api.ideogram.ai`. OpenAPI 3.1 spec at [`openapi/ideogram-openapi.yml`](openapi/ideogram-openapi.yml).
 
 ## Common Properties
 - [Website](https://ideogram.ai/)
-- [Plans](plans/ideogram-plans-pricing.yml) — placeholder, pipeline reconciles later
-- [RateLimits](rate-limits/ideogram-rate-limits.yml) — placeholder
-- [FinOps](finops/ideogram-finops.yml) — FOCUS-aligned placeholder
+- [Documentation](https://docs.ideogram.ai/)
+- [OpenAPI](openapi/ideogram-openapi.yml)
+- [Plans](plans/ideogram-plans-pricing.yml) — reconciled
+- [RateLimits](rate-limits/ideogram-rate-limits.yml) — partial
+- [FinOps](finops/ideogram-finops.yml) — reconciled
+
+## Pricing Snapshot
+- Turbo rendering: starting ~$0.03/image
+- Default rendering: ~$0.075/image
+- Quality rendering: ~$0.09/image
+- Custom model training and editing operations consume additional credits
+- Enterprise: custom
 
 ## Maintainers
 **FN:** Kin Lane

@@ -5,31 +5,41 @@ provider: Ideogram
 providerId: ideogram
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: partial
 tags:
 - AI
 - Image Generation
 - Text
 - Realistic
-- Replicate
+- Editing
 - Rate Limiting
 - Quotas
 - Throttling
-description: Placeholder rate-limit artifact for Ideogram. Replace with real limits once researched.
-notes: Initial scaffold — limits have not yet been reconciled.
+description: >-
+  Ideogram applies per-account rate limits and quotas not publicly documented in the OpenAPI
+  spec. Standard 429 backoff applies. Production users should request rate limit increases
+  via the developer portal.
+notes: Specific RPS and concurrent generation caps are not publicly listed; contact developer support for high-volume needs.
 sources:
-- https://ideogram.ai/
+- https://docs.ideogram.ai/
+- https://developer.ideogram.ai/
 responseCodes:
   throttled: 429
 limits:
-- name: Default
+- name: HTTP Requests
   scope: account
-  metric: varies
-  limit: see provider documentation
-  notes: Pending reconciliation.
+  metric: requests
+  limit: not publicly documented
+  notes: Standard 429 backoff applies.
+- name: Concurrent Generations
+  scope: account
+  metric: concurrent_generations
+  limit: not publicly documented
 policies:
 - name: Backoff Strategy
   description: Clients should implement exponential backoff with jitter and honor any Retry-After header.
+- name: Tier Choice
+  description: Use Turbo for drafts and high-volume workloads; reserve Quality for final assets to control rate budget consumption.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

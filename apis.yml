@@ -3,21 +3,54 @@ url: https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/a
 name: Ideogram
 x-type: company
 description: >-
-  Ideogram is an image generation platform notable for its industry-leading text-in-image rendering. Public APIs available for the Ideogram 3.0 family.
+  Ideogram is an image generation platform notable for industry-leading text-in-image
+  rendering. The Ideogram API (3.0 and beyond) supports generation, edit, inpaint, remix,
+  reframe, replace background, layerize text, upscale, describe, and remove background, plus
+  custom model training with dataset and asset management. Authenticated REST API with
+  published OpenAPI 3.1 spec.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
   - Image Generation
   - Text
   - Realistic
-  - Replicate
+  - Editing
 created: '2026-05-08'
 modified: '2026-05-08'
 specificationVersion: '0.19'
-apis: []
+apis:
+  - aid: ideogram:platform
+    name: Ideogram API
+    description: >-
+      REST API at https://api.ideogram.ai for image generation, editing, training, and
+      analysis. Endpoints include /v1/ideogram-v3/generate, edit, inpaint, remix, reframe,
+      replace-background, layerize-text, upscale, describe, remove-background, and dataset +
+      custom-model training endpoints. OpenAPI 3.1 published at developer.ideogram.ai.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://docs.ideogram.ai/
+    baseURL: https://api.ideogram.ai
+    tags:
+      - Image Generation
+      - Editing
+      - Inpainting
+      - Custom Models
+      - Text-in-Image
+    properties:
+      - type: Documentation
+        url: https://docs.ideogram.ai/
+      - type: OpenAPI
+        url: openapi/ideogram-openapi.yml
+      - type: SignUp
+        url: https://developer.ideogram.ai/
+      - type: Pricing
+        url: https://ideogram.ai/features/api-pricing
 common:
   - type: Website
     url: https://ideogram.ai/
+  - type: Documentation
+    url: https://docs.ideogram.ai/
+  - type: OpenAPI
+    url: openapi/ideogram-openapi.yml
   - type: Plans
     url: plans/ideogram-plans-pricing.yml
   - type: RateLimits

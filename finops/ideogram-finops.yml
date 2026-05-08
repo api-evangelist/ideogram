@@ -5,20 +5,24 @@ provider: Ideogram
 providerId: ideogram
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
 - AI
 - Image Generation
 - Text
 - Realistic
-- Replicate
+- Editing
 - FinOps
 - Cost Management
 - FOCUS
-description: FOCUS-aligned FinOps placeholder for Ideogram. Pipeline will replace with real billing details.
-notes: Initial scaffold — billing model has not yet been reconciled.
+description: >-
+  FOCUS-aligned FinOps view of Ideogram. Ideogram bills per image generated with rate based
+  on rendering tier (Turbo / Default / Quality). Custom model training, dataset uploads, and
+  editing operations consume additional cost. Tier choice is the dominant cost lever.
+notes: Use Turbo for high-volume / draft workflows; switch to Quality only for final assets.
 sources:
-- https://ideogram.ai/
+- https://ideogram.ai/features/api-pricing
+- https://docs.ideogram.ai/
 - https://focus.finops.org/focus-specification/v1-3/
 alignedWith:
   framework: FinOps Foundation Framework
@@ -29,7 +33,7 @@ alignedWith:
 publisherName: Ideogram
 serviceCategory: AI
 billingModel:
-  pricingCategory: To Be Reconciled
+  pricingCategory: Usage-Based (Per Image)
   billingFrequency: Monthly
   billingCurrency: USD
   chargeCategories:
@@ -37,7 +41,7 @@ billingModel:
   - Purchase
   - Adjustment
 focusColumns:
-  ServiceName: Ideogram
+  ServiceName: Ideogram API
   ServiceCategory: AI
   ProviderName: Ideogram
   PublisherName: Ideogram
@@ -45,22 +49,37 @@ focusColumns:
   BillingCurrency: USD
   ChargeCategory: Usage
 meters:
-- name: api_usage
-  description: Catch-all meter pending reconciliation.
-  unit: varies
+- name: image_generations
+  description: Image generations charged by rendering tier (Turbo/Default/Quality).
+  unit: image
   aggregation: sum
   dimensions:
   - account
-  - resource
+  - tier
+  - model
+- name: image_edits
+  description: Edit / inpaint / remix / reframe / replace-background calls.
+  unit: image
+  aggregation: sum
+  dimensions:
+  - account
+  - operation
+- name: custom_model_training
+  description: Custom model training jobs and dataset asset uploads.
+  unit: training_job
+  aggregation: sum
+  dimensions:
+  - account
+  - dataset
 principles:
 - name: Visibility
-  description: Pull provider invoices or usage exports until a self-serve usage feed is documented.
+  description: Track per-tier image usage and editing operations in the developer dashboard.
 - name: Allocation
-  description: Tag invoice line items to consuming business units in your FinOps store.
+  description: Tag generations to creative project / brand to allocate spend.
 - name: Optimization
-  description: Levers depend on the provider's billing model; review at renewal once reconciled.
+  description: Default to Turbo for drafts; reserve Quality for hero assets and final output.
 - name: Accountability
-  description: Assign a contract owner to review billing against negotiated terms.
+  description: Assign budget owners per creative workflow.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
