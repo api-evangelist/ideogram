@@ -1,7 +1,7 @@
 aid: ideogram
 url: https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml
 name: Ideogram
-x-type: company
+kind: company
 description: >-
   Ideogram is an image generation platform notable for industry-leading text-in-image
   rendering. The Ideogram API (3.0 and beyond) supports generation, edit, inpaint, remix,
