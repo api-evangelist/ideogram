@@ -1,0 +1,89 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_vision
+  description: 'API Reference — subpackage_vision. 1 operations. Lead operation: Describe. Self-contained Naftiko capability
+    covering one Ideogram business surface.'
+  tags:
+  - Ideogram
+  - subpackage_vision
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    IDEOGRAM_API_KEY: IDEOGRAM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ideogram-subpackage-vision
+    baseUri: https://api.ideogram.ai
+    description: API Reference — subpackage_vision business capability. Self-contained, no shared references.
+    resources:
+    - name: describe
+      path: /describe
+      operations:
+      - name: postdescribe
+        method: POST
+        description: Describe
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: Api-Key
+      value: '{{env.IDEOGRAM_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: ideogram-subpackage-vision-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_vision. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/describe
+      name: describe
+      description: REST surface for describe.
+      operations:
+      - method: POST
+        name: postdescribe
+        description: Describe
+        call: ideogram-subpackage-vision.postdescribe
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ideogram-subpackage-vision-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_vision. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: describe
+      description: Describe
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-vision.postdescribe
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

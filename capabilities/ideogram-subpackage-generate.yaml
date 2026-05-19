@@ -1,0 +1,775 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_generate
+  description: 'API Reference — subpackage_generate. 15 operations. Lead operation: Edit (legacy). Self-contained Naftiko
+    capability covering one Ideogram business surface.'
+  tags:
+  - Ideogram
+  - subpackage_generate
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    IDEOGRAM_API_KEY: IDEOGRAM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ideogram-subpackage-generate
+    baseUri: https://api.ideogram.ai
+    description: API Reference — subpackage_generate business capability. Self-contained, no shared references.
+    resources:
+    - name: edit
+      path: /edit
+      operations:
+      - name: posteditimage
+        method: POST
+        description: Edit (legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: generate
+      path: /generate
+      operations:
+      - name: postgenerateimage
+        method: POST
+        description: Generate (legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: reframe
+      path: /reframe
+      operations:
+      - name: postreframeimage
+        method: POST
+        description: Reframe (legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: remix
+      path: /remix
+      operations:
+      - name: postremiximage
+        method: POST
+        description: Remix (legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: upscale
+      path: /upscale
+      operations:
+      - name: postupscaleimage
+        method: POST
+        description: Upscale
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-edit
+      path: /v1/edit
+      operations:
+      - name: postv1editimage
+        method: POST
+        description: Edit images with a prompt
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-edit
+      path: /v1/ideogram-v3/edit
+      operations:
+      - name: posteditimagev3
+        method: POST
+        description: Edit with Ideogram 3.0 (legacy)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-generate
+      path: /v1/ideogram-v3/generate
+      operations:
+      - name: postgenerateimagev3
+        method: POST
+        description: Generate with Ideogram 3.0
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-generate-transparent
+      path: /v1/ideogram-v3/generate-transparent
+      operations:
+      - name: postgenerateimagev3transparent
+        method: POST
+        description: Generate with Ideogram 3.0 (Transparent Background)
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-inpaint
+      path: /v1/ideogram-v3/inpaint
+      operations:
+      - name: postinpaintimagev3
+        method: POST
+        description: Inpaint with Ideogram 3.0
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-layerize-text
+      path: /v1/ideogram-v3/layerize-text
+      operations:
+      - name: postlayerizetextv3
+        method: POST
+        description: Layerize Text
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-reframe
+      path: /v1/ideogram-v3/reframe
+      operations:
+      - name: postreframeimagev3
+        method: POST
+        description: Reframe with Ideogram 3.0
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-remix
+      path: /v1/ideogram-v3/remix
+      operations:
+      - name: postremiximagev3
+        method: POST
+        description: Remix with Ideogram 3.0
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-ideogram-v3-replace-background
+      path: /v1/ideogram-v3/replace-background
+      operations:
+      - name: postreplacebackgroundv3
+        method: POST
+        description: Replace Background with Ideogram 3.0
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: v1-remove-background
+      path: /v1/remove-background
+      operations:
+      - name: postremovebackground
+        method: POST
+        description: Remove Background
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: Api-Key
+      value: '{{env.IDEOGRAM_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: ideogram-subpackage-generate-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_generate. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/edit
+      name: edit
+      description: REST surface for edit.
+      operations:
+      - method: POST
+        name: posteditimage
+        description: Edit (legacy)
+        call: ideogram-subpackage-generate.posteditimage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/generate
+      name: generate
+      description: REST surface for generate.
+      operations:
+      - method: POST
+        name: postgenerateimage
+        description: Generate (legacy)
+        call: ideogram-subpackage-generate.postgenerateimage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reframe
+      name: reframe
+      description: REST surface for reframe.
+      operations:
+      - method: POST
+        name: postreframeimage
+        description: Reframe (legacy)
+        call: ideogram-subpackage-generate.postreframeimage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/remix
+      name: remix
+      description: REST surface for remix.
+      operations:
+      - method: POST
+        name: postremiximage
+        description: Remix (legacy)
+        call: ideogram-subpackage-generate.postremiximage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/upscale
+      name: upscale
+      description: REST surface for upscale.
+      operations:
+      - method: POST
+        name: postupscaleimage
+        description: Upscale
+        call: ideogram-subpackage-generate.postupscaleimage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/edit
+      name: v1-edit
+      description: REST surface for v1-edit.
+      operations:
+      - method: POST
+        name: postv1editimage
+        description: Edit images with a prompt
+        call: ideogram-subpackage-generate.postv1editimage
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/edit
+      name: v1-ideogram-v3-edit
+      description: REST surface for v1-ideogram-v3-edit.
+      operations:
+      - method: POST
+        name: posteditimagev3
+        description: Edit with Ideogram 3.0 (legacy)
+        call: ideogram-subpackage-generate.posteditimagev3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/generate
+      name: v1-ideogram-v3-generate
+      description: REST surface for v1-ideogram-v3-generate.
+      operations:
+      - method: POST
+        name: postgenerateimagev3
+        description: Generate with Ideogram 3.0
+        call: ideogram-subpackage-generate.postgenerateimagev3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/generate-transparent
+      name: v1-ideogram-v3-generate-transparent
+      description: REST surface for v1-ideogram-v3-generate-transparent.
+      operations:
+      - method: POST
+        name: postgenerateimagev3transparent
+        description: Generate with Ideogram 3.0 (Transparent Background)
+        call: ideogram-subpackage-generate.postgenerateimagev3transparent
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/inpaint
+      name: v1-ideogram-v3-inpaint
+      description: REST surface for v1-ideogram-v3-inpaint.
+      operations:
+      - method: POST
+        name: postinpaintimagev3
+        description: Inpaint with Ideogram 3.0
+        call: ideogram-subpackage-generate.postinpaintimagev3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/layerize-text
+      name: v1-ideogram-v3-layerize-text
+      description: REST surface for v1-ideogram-v3-layerize-text.
+      operations:
+      - method: POST
+        name: postlayerizetextv3
+        description: Layerize Text
+        call: ideogram-subpackage-generate.postlayerizetextv3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/reframe
+      name: v1-ideogram-v3-reframe
+      description: REST surface for v1-ideogram-v3-reframe.
+      operations:
+      - method: POST
+        name: postreframeimagev3
+        description: Reframe with Ideogram 3.0
+        call: ideogram-subpackage-generate.postreframeimagev3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/remix
+      name: v1-ideogram-v3-remix
+      description: REST surface for v1-ideogram-v3-remix.
+      operations:
+      - method: POST
+        name: postremiximagev3
+        description: Remix with Ideogram 3.0
+        call: ideogram-subpackage-generate.postremiximagev3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/replace-background
+      name: v1-ideogram-v3-replace-background
+      description: REST surface for v1-ideogram-v3-replace-background.
+      operations:
+      - method: POST
+        name: postreplacebackgroundv3
+        description: Replace Background with Ideogram 3.0
+        call: ideogram-subpackage-generate.postreplacebackgroundv3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/remove-background
+      name: v1-remove-background
+      description: REST surface for v1-remove-background.
+      operations:
+      - method: POST
+        name: postremovebackground
+        description: Remove Background
+        call: ideogram-subpackage-generate.postremovebackground
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ideogram-subpackage-generate-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_generate. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: edit-legacy
+      description: Edit (legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.posteditimage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-legacy
+      description: Generate (legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postgenerateimage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reframe-legacy
+      description: Reframe (legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postreframeimage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remix-legacy
+      description: Remix (legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postremiximage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upscale
+      description: Upscale
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postupscaleimage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: edit-images-prompt
+      description: Edit images with a prompt
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postv1editimage
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: edit-ideogram-3-0-legacy
+      description: Edit with Ideogram 3.0 (legacy)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.posteditimagev3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-ideogram-3-0
+      description: Generate with Ideogram 3.0
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postgenerateimagev3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: generate-ideogram-3-0-transparent-background
+      description: Generate with Ideogram 3.0 (Transparent Background)
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postgenerateimagev3transparent
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: inpaint-ideogram-3-0
+      description: Inpaint with Ideogram 3.0
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postinpaintimagev3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: layerize-text
+      description: Layerize Text
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postlayerizetextv3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: reframe-ideogram-3-0
+      description: Reframe with Ideogram 3.0
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postreframeimagev3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remix-ideogram-3-0
+      description: Remix with Ideogram 3.0
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postremiximagev3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: replace-background-ideogram-3-0
+      description: Replace Background with Ideogram 3.0
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postreplacebackgroundv3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: remove-background
+      description: Remove Background
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-generate.postremovebackground
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

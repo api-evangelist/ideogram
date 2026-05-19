@@ -1,0 +1,193 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_models
+  description: 'API Reference — subpackage_models. 3 operations. Lead operation: List models. Self-contained Naftiko capability
+    covering one Ideogram business surface.'
+  tags:
+  - Ideogram
+  - subpackage_models
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    IDEOGRAM_API_KEY: IDEOGRAM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ideogram-subpackage-models
+    baseUri: https://api.ideogram.ai
+    description: API Reference — subpackage_models business capability. Self-contained, no shared references.
+    resources:
+    - name: models
+      path: /models
+      operations:
+      - name: listcustommodels
+        method: GET
+        description: List models
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: scope
+          in: query
+          type: string
+          description: Controls which models are returned. Omit to return both owned and shared models combined. `owned` returns
+            only models created by the authenticated user. `shared
+        - name: status
+          in: query
+          type: array
+          description: 'Filter by model status. Applied to owned models only; shared models in the model registry are already
+            filtered to available versions. Example: `?status=TRAINING'
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+    - name: models-model_id
+      path: /models/{model_id}
+      operations:
+      - name: getcustommodel
+        method: GET
+        description: Get model details
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: model_id
+          in: path
+          type: string
+          required: true
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+    - name: v1-ideogram-v3-train-model
+      path: /v1/ideogram-v3/train-model
+      operations:
+      - name: trainmodelv3
+        method: POST
+        description: Train a custom Ideogram v3 model
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: Api-Key
+      value: '{{env.IDEOGRAM_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: ideogram-subpackage-models-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_models. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/models
+      name: models
+      description: REST surface for models.
+      operations:
+      - method: GET
+        name: listcustommodels
+        description: List models
+        call: ideogram-subpackage-models.listcustommodels
+        with:
+          scope: rest.scope
+          status: rest.status
+          Api-Key: rest.Api-Key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/models/{model-id}
+      name: models-model-id
+      description: REST surface for models-model_id.
+      operations:
+      - method: GET
+        name: getcustommodel
+        description: Get model details
+        call: ideogram-subpackage-models.getcustommodel
+        with:
+          model_id: rest.model_id
+          Api-Key: rest.Api-Key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/v1/ideogram-v3/train-model
+      name: v1-ideogram-v3-train-model
+      description: REST surface for v1-ideogram-v3-train-model.
+      operations:
+      - method: POST
+        name: trainmodelv3
+        description: Train a custom Ideogram v3 model
+        call: ideogram-subpackage-models.trainmodelv3
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ideogram-subpackage-models-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_models. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-models
+      description: List models
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ideogram-subpackage-models.listcustommodels
+      with:
+        scope: tools.scope
+        status: tools.status
+        Api-Key: tools.Api-Key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-model-details
+      description: Get model details
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ideogram-subpackage-models.getcustommodel
+      with:
+        model_id: tools.model_id
+        Api-Key: tools.Api-Key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: train-custom-ideogram-v3-model
+      description: Train a custom Ideogram v3 model
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-models.trainmodelv3
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.

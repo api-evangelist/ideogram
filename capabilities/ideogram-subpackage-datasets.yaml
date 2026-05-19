@@ -1,0 +1,227 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: API Reference — subpackage_datasets
+  description: 'API Reference — subpackage_datasets. 4 operations. Lead operation: List datasets. Self-contained Naftiko capability
+    covering one Ideogram business surface.'
+  tags:
+  - Ideogram
+  - subpackage_datasets
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    IDEOGRAM_API_KEY: IDEOGRAM_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: ideogram-subpackage-datasets
+    baseUri: https://api.ideogram.ai
+    description: API Reference — subpackage_datasets business capability. Self-contained, no shared references.
+    resources:
+    - name: datasets
+      path: /datasets
+      operations:
+      - name: listdatasets
+        method: GET
+        description: List datasets
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+      - name: createdataset
+        method: POST
+        description: Create a new dataset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    - name: datasets-dataset_id
+      path: /datasets/{dataset_id}
+      operations:
+      - name: getdataset
+        method: GET
+        description: Get a dataset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dataset_id
+          in: path
+          type: string
+          required: true
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+    - name: datasets-dataset_id-upload_assets
+      path: /datasets/{dataset_id}/upload_assets
+      operations:
+      - name: uploaddatasetassets
+        method: POST
+        description: Upload assets to a dataset
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: dataset_id
+          in: path
+          type: string
+          required: true
+        - name: Api-Key
+          in: header
+          type: string
+          description: API key for access control. Use in the header with the name \"Api-Key\"
+          required: true
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: false
+    authentication:
+      type: apikey
+      key: Api-Key
+      value: '{{env.IDEOGRAM_API_KEY}}'
+      placement: header
+  exposes:
+  - type: rest
+    namespace: ideogram-subpackage-datasets-rest
+    port: 8080
+    description: REST adapter for API Reference — subpackage_datasets. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/datasets
+      name: datasets
+      description: REST surface for datasets.
+      operations:
+      - method: GET
+        name: listdatasets
+        description: List datasets
+        call: ideogram-subpackage-datasets.listdatasets
+        with:
+          Api-Key: rest.Api-Key
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: createdataset
+        description: Create a new dataset
+        call: ideogram-subpackage-datasets.createdataset
+        with:
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/datasets/{dataset-id}
+      name: datasets-dataset-id
+      description: REST surface for datasets-dataset_id.
+      operations:
+      - method: GET
+        name: getdataset
+        description: Get a dataset
+        call: ideogram-subpackage-datasets.getdataset
+        with:
+          dataset_id: rest.dataset_id
+          Api-Key: rest.Api-Key
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/datasets/{dataset-id}/upload-assets
+      name: datasets-dataset-id-upload-assets
+      description: REST surface for datasets-dataset_id-upload_assets.
+      operations:
+      - method: POST
+        name: uploaddatasetassets
+        description: Upload assets to a dataset
+        call: ideogram-subpackage-datasets.uploaddatasetassets
+        with:
+          dataset_id: rest.dataset_id
+          Api-Key: rest.Api-Key
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: ideogram-subpackage-datasets-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for API Reference — subpackage_datasets. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-datasets
+      description: List datasets
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ideogram-subpackage-datasets.listdatasets
+      with:
+        Api-Key: tools.Api-Key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-new-dataset
+      description: Create a new dataset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-datasets.createdataset
+      with:
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-dataset
+      description: Get a dataset
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: ideogram-subpackage-datasets.getdataset
+      with:
+        dataset_id: tools.dataset_id
+        Api-Key: tools.Api-Key
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: upload-assets-dataset
+      description: Upload assets to a dataset
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: ideogram-subpackage-datasets.uploaddatasetassets
+      with:
+        dataset_id: tools.dataset_id
+        Api-Key: tools.Api-Key
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
