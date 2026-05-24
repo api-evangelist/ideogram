@@ -65,6 +65,8 @@ common:
     url: rate-limits/ideogram-rate-limits.yml
   - type: FinOps
     url: finops/ideogram-finops.yml
+  - type: LLMsTxt
+    url: https://docs.ideogram.ai/llms.txt
 maintainers:
   - FN: Kin Lane
     email: kin@apievangelist.com
