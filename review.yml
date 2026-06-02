@@ -1,0 +1,50 @@
+executed: '2026-05-30T00:00:00.000Z'
+subject: ideogram-async-streaming-webhook-surface
+question: Does Ideogram expose a documented streaming or webhook surface for its
+  image generation REST API?
+sources:
+  - https://docs.ideogram.ai/llms.txt
+  - https://developer.ideogram.ai/llms-full.txt
+  - https://developer.ideogram.ai/ideogram-api/api-overview
+findings:
+  webhooks:
+    documented: false
+    notes: No webhook, callback_url, webhook_url, status_callback, or HTTP push
+      notification mechanism is documented in the Ideogram developer documentation
+      or in the published OpenAPI 3.1 specification at developer.ideogram.ai.
+  streaming:
+    sse: false
+    websockets: false
+    chunked_streaming: false
+    notes: No Server-Sent Events, WebSocket endpoints, or chunked streaming
+      response modes are documented. The image generation, edit, inpaint, remix,
+      reframe, replace-background, layerize-text, upscale, describe, and
+      remove-background endpoints are described as synchronous request/response.
+  async_polling:
+    documented: true
+    scope: custom-model training only
+    pattern: |
+      Poll GET https://api.ideogram.ai/models/{model_id} and inspect the
+      training_status / status field until it transitions to COMPLETED.
+    notes: This is the only async pattern in the documented surface. It is
+      client-driven HTTP polling, not a push/webhook or streaming channel.
+      Image generation and edit operations remain synchronous.
+  related_surface_notes:
+    - Generated image URLs are described as ephemeral; clients must download
+      assets from the synchronous response, but this is asset retention, not
+      an async notification surface.
+    - Dataset upload responses report successful_assets and failed_assets
+      inline in the synchronous response; no async job is created.
+conclusion: Ideogram does not expose a documented streaming or webhook surface
+  as of the date of this review. The only documented asynchronous interaction
+  is manual HTTP polling of GET /models/{model_id} during custom-model
+  training. No OpenAPI changes were made because there is no new
+  webhook/streaming surface to model.
+actions_taken:
+  - Verified absence against docs.ideogram.ai/llms.txt
+  - Verified absence against developer.ideogram.ai/llms-full.txt
+  - Verified absence against the API Overview page
+  - Grepped local openapi/ideogram-openapi.yml for webhook/callback/stream/SSE
+    markers (none present)
+  - Bumped apis.yml modified date to 2026-05-30
+results: []
