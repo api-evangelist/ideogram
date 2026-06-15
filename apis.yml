@@ -2,10 +2,11 @@ aid: ideogram
 url: https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml
 name: Ideogram
 kind: company
-description: Ideogram is an image generation platform notable for industry-leading text-in-image rendering. The Ideogram API
-  (3.0 and beyond) supports generation, edit, inpaint, remix, reframe, replace background, layerize text, upscale, describe,
-  and remove background, plus custom model training with dataset and asset management. Authenticated REST API with published
-  OpenAPI 3.1 spec.
+description: >-
+  Ideogram is an image generation platform notable for industry-leading text-in-image rendering. The Ideogram API (3.0
+  and beyond) supports generation, edit, inpaint, remix, reframe, replace background, layerize text, upscale, describe,
+  and remove background, plus custom model training with dataset and asset management. Authenticated REST API with
+  published OpenAPI 3.1 spec.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
   - AI
@@ -19,35 +20,28 @@ specificationVersion: '0.19'
 apis:
   - aid: ideogram:platform
     name: Ideogram API
-    description: REST API at https://api.ideogram.ai for image generation, editing, training, and analysis. Endpoints include
-      /v1/ideogram-v3/generate, edit, inpaint, remix, reframe, replace-background, layerize-text, upscale, describe, remove-background,
-      and dataset + custom-model training endpoints. OpenAPI 3.1 published at developer.ideogram.ai.
+    description: >-
+      REST API at https://api.ideogram.ai for image generation, editing, training, and analysis. Endpoints include
+      /v1/ideogram-v3/generate, edit, inpaint, remix, reframe, replace-background, layerize-text, upscale, describe,
+      remove-background, and dataset + custom-model training endpoints. OpenAPI 3.1 published at developer.ideogram.ai.
     image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
     humanURL: https://docs.ideogram.ai/
     baseURL: https://api.ideogram.ai
     tags:
-    - Image Generation
-    - Editing
-    - Inpainting
-    - Custom Models
-    - Text-in-Image
+      - Image Generation
+      - Editing
+      - Inpainting
+      - Custom Models
+      - Text-in-Image
     properties:
-    - type: Documentation
-      url: https://docs.ideogram.ai/
-    - type: OpenAPI
-      url: openapi/ideogram-openapi.yml
-    - type: SignUp
-      url: https://developer.ideogram.ai/
-    - type: Pricing
-      url: https://ideogram.ai/features/api-pricing
-    - type: NaftikoCapability
-      url: capabilities/ideogram-subpackage-datasets.yaml
-    - type: NaftikoCapability
-      url: capabilities/ideogram-subpackage-generate.yaml
-    - type: NaftikoCapability
-      url: capabilities/ideogram-subpackage-models.yaml
-    - type: NaftikoCapability
-      url: capabilities/ideogram-subpackage-vision.yaml
+      - type: Documentation
+        url: https://docs.ideogram.ai/
+      - type: OpenAPI
+        url: openapi/ideogram-openapi.yml
+      - type: SignUp
+        url: https://developer.ideogram.ai/
+      - type: Pricing
+        url: https://ideogram.ai/features/api-pricing
 common:
   - type: GitHubOrganization
     url: https://github.com/ideogram-ai
