@@ -7,7 +7,7 @@ description: >-
   and beyond) supports generation, edit, inpaint, remix, reframe, replace background, layerize text, upscale, describe,
   and remove background, plus custom model training with dataset and asset management. Authenticated REST API with
   published OpenAPI 3.1 spec.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
   - AI
   - Image Generation
@@ -24,7 +24,7 @@ apis:
       REST API at https://api.ideogram.ai for image generation, editing, training, and analysis. Endpoints include
       /v1/ideogram-v3/generate, edit, inpaint, remix, reframe, replace-background, layerize-text, upscale, describe,
       remove-background, and dataset + custom-model training endpoints. OpenAPI 3.1 published at developer.ideogram.ai.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://docs.ideogram.ai/
     baseURL: https://api.ideogram.ai
     tags:
