@@ -38,7 +38,7 @@ apis:
         url: https://docs.ideogram.ai/
       - type: OpenAPI
         url: openapi/ideogram-openapi.yml
-      - type: SignUp
+      - type: Signup
         url: https://developer.ideogram.ai/
       - type: Pricing
         url: https://ideogram.ai/features/api-pricing
@@ -59,7 +59,7 @@ common:
     url: rate-limits/ideogram-rate-limits.yml
   - type: FinOps
     url: finops/ideogram-finops.yml
-  - type: LLMsTxt
+  - type: LlmsText
     url: https://docs.ideogram.ai/llms.txt
 maintainers:
   - FN: Kin Lane
