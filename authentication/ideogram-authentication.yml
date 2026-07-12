@@ -1,0 +1,16 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/ideogram-openapi.yml
+summary:
+  types:
+  - apiKey
+  api_key_in:
+  - header
+schemes:
+- name: ApiKeyAuth
+  type: apiKey
+  in: header
+  parameter: Api-Key
+  description: API key for access control. Use in the header with the name \"Api-Key\"
+  sources:
+  - openapi/ideogram-openapi.yml

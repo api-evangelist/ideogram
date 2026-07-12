@@ -43,6 +43,10 @@ apis:
       - type: Pricing
         url: https://ideogram.ai/features/api-pricing
 common:
+  - type: DomainSecurity
+    url: security/ideogram-domain-security.yml
+  - type: Authentication
+    url: authentication/ideogram-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/ideogram-ai
   - type: LinkedIn
