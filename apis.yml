@@ -43,6 +43,8 @@ apis:
       - type: Pricing
         url: https://ideogram.ai/features/api-pricing
 common:
+  - type: AgenticAccess
+    url: agentic-access/ideogram-agentic-access.yml
   - type: DomainSecurity
     url: security/ideogram-domain-security.yml
   - type: Authentication
