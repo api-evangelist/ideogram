@@ -1,0 +1,359 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_datasets API
+  version: 1.0.0
+servers:
+- url: https://api.ideogram.ai
+tags:
+- name: subpackage_datasets
+paths:
+  /datasets:
+    get:
+      operationId: list-datasets
+      summary: List datasets
+      description: Lists all datasets for the authenticated user
+      tags:
+      - subpackage_datasets
+      parameters:
+      - name: Api-Key
+        in: header
+        description: API key for access control. Use in the header with the name \"Api-Key\"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Datasets retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListDatasetsResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Any type
+    post:
+      operationId: create-dataset
+      summary: Create a new dataset
+      description: Creates a new dataset
+      tags:
+      - subpackage_datasets
+      parameters:
+      - name: Api-Key
+        in: header
+        description: API key for access control. Use in the header with the name \"Api-Key\"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Dataset created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dataset'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        description: Request to create a new dataset
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDatasetRequest'
+  /datasets/{dataset_id}:
+    get:
+      operationId: get-dataset
+      summary: Get a dataset
+      description: 'Returns a dataset by ID, including the total number of files and a list of each file''s name and size in bytes.
+
+        '
+      tags:
+      - subpackage_datasets
+      parameters:
+      - name: dataset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Api-Key
+        in: header
+        description: API key for access control. Use in the header with the name \"Api-Key\"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Dataset retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetDatasetResponse'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Dataset not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+  /datasets/{dataset_id}/upload_assets:
+    post:
+      operationId: upload-dataset-assets
+      summary: Upload assets to a dataset
+      description: 'Upload image assets to a dataset for model training. Accepts individual images (JPEG, PNG, WebP), optional .txt caption sidecar files, and/or ZIP archives containing images and captions. A dataset can contain up to 100 images.
+
+        '
+      tags:
+      - subpackage_datasets
+      parameters:
+      - name: dataset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Api-Key
+        in: header
+        description: API key for access control. Use in the header with the name \"Api-Key\"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Upload summary
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadDatasetAssetsResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '404':
+          description: Dataset not found
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+                  description: 'Image files (JPEG, PNG, WebP), .txt caption sidecar files, and/or ZIP archives containing images and captions. Caption .txt files are matched to images by filename stem (e.g. sunset.txt provides the caption for sunset.jpg). Captions are optional!
+
+                    '
+              required:
+              - files
+components:
+  schemas:
+    CreateDatasetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the dataset.
+      required:
+      - name
+      title: CreateDatasetRequest
+    DatasetFile:
+      type: object
+      properties:
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Filename of the file in the dataset.
+        file_size_bytes:
+          type:
+          - integer
+          - 'null'
+          description: Size of the file in bytes, if available.
+      required:
+      - file_name
+      description: A file in a dataset.
+      title: DatasetFile
+    DatasetUploadFailedAsset:
+      type: object
+      properties:
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the failed image.
+        failure_reason:
+          $ref: '#/components/schemas/DatasetAssetFailureReason'
+      required:
+      - failure_reason
+      title: DatasetUploadFailedAsset
+    Dataset:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: Unique identifier for the dataset.
+        name:
+          type: string
+          description: Display name of the dataset.
+        user_id:
+          type: string
+          description: ID of the user who owns this dataset.
+        creation_time:
+          type: string
+          format: date-time
+          description: When the dataset was created.
+        cover_asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
+      required:
+      - dataset_id
+      - name
+      - user_id
+      - creation_time
+      description: A dataset for organizing training images.
+      title: Dataset
+    DatasetAssetFailureReason:
+      type: string
+      enum:
+      - FAILED_SAFETY_CHECK
+      - FILE_TOO_LARGE
+      - INTERNAL_ERROR
+      - INVALID_CAPTION
+      - INVALID_IMAGE
+      - INVALID_ZIP
+      - TOO_MANY_IMAGES
+      description: Reason why an asset failed to upload.
+      title: DatasetAssetFailureReason
+    AssetType:
+      type: string
+      enum:
+      - ASSET
+      - CANVAS_ASSET
+      - LAYERED_ASSET
+      - RESPONSE
+      - UPLOAD
+      title: AssetType
+    DatasetUploadSucceededAsset:
+      type: object
+      properties:
+        asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the uploaded image.
+      required:
+      - asset_identifier
+      title: DatasetUploadSucceededAsset
+    UploadDatasetAssetsResponse:
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: Total number of images processed.
+        success_count:
+          type: integer
+          description: Number of images successfully uploaded.
+        failure_count:
+          type: integer
+          description: Number of images that failed to upload.
+        successful_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadSucceededAsset'
+          description: Details of successfully uploaded assets.
+        failed_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadFailedAsset'
+          description: Details of assets that failed to upload.
+      required:
+      - total_count
+      - success_count
+      - failure_count
+      title: UploadDatasetAssetsResponse
+    ListDatasetsResponse:
+      type: object
+      properties:
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dataset'
+          description: List of datasets for the authenticated user.
+      required:
+      - datasets
+      title: ListDatasetsResponse
+    AssetIdentifier:
+      type: object
+      properties:
+        asset_type:
+          $ref: '#/components/schemas/AssetType'
+        asset_id:
+          type: string
+      required:
+      - asset_type
+      - asset_id
+      description: An identifier for an ideogram asset.
+      title: AssetIdentifier
+    GetDatasetResponse:
+      type: object
+      properties:
+        dataset:
+          $ref: '#/components/schemas/Dataset'
+        file_count:
+          type: integer
+          description: Total number of files in the dataset.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetFile'
+          description: List of files in the dataset.
+        custom_model_ids:
+          type: array
+          items:
+            type: string
+          description: 'IDs of all custom models trained from this dataset. Empty array if no model has been trained yet.
+
+            '
+      required:
+      - dataset
+      - file_count
+      - files
+      - custom_model_ids
+      description: Detailed view of a dataset, including its files.
+      title: GetDatasetResponse
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Api-Key
+      description: API key for access control. Use in the header with the name \"Api-Key\"

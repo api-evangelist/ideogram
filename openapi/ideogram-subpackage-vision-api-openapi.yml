@@ -1,0 +1,108 @@
+openapi: 3.1.0
+info:
+  title: API Reference subpackage_datasets subpackage_vision API
+  version: 1.0.0
+servers:
+- url: https://api.ideogram.ai
+tags:
+- name: subpackage_vision
+paths:
+  /describe:
+    post:
+      operationId: post-describe
+      summary: Describe
+      description: 'Describe an image.
+
+
+        Supported image formats include JPEG, PNG, and WebP.
+
+        '
+      tags:
+      - subpackage_vision
+      parameters:
+      - name: Api-Key
+        in: header
+        description: API key for access control. Use in the header with the name \"Api-Key\"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Description(s) created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DescribeResponse'
+        '400':
+          description: Invalid input provided.
+          content:
+            application/json:
+              schema:
+                description: Any type
+        '422':
+          description: Image failed the safety check.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ImageSafetyError'
+        '429':
+          description: Too many requests.
+          content:
+            application/json:
+              schema:
+                description: Any type
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image_file:
+                  type: string
+                  format: binary
+                  description: An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time.
+                describe_model_version:
+                  $ref: '#/components/schemas/DescribeModelVersion'
+              required:
+              - image_file
+components:
+  schemas:
+    ImageSafetyError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      title: ImageSafetyError
+    Description:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The generated description for the provided image.
+      title: Description
+    DescribeModelVersion:
+      type: string
+      enum:
+      - V_2
+      - V_3
+      default: V_3
+      description: The model version to use for describing images. Defaults to V_3.
+      title: DescribeModelVersion
+    DescribeResponse:
+      type: object
+      properties:
+        descriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Description'
+          description: A collection of descriptions for given content.
+      description: The response for a describe request encapsulates a list of descriptions.
+      title: DescribeResponse
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Api-Key
+      description: API key for access control. Use in the header with the name \"Api-Key\"
