@@ -1,0 +1,20 @@
+{
+  "provider": "ideogram",
+  "sources": [
+    "ideogram-subpackage-datasets-api-openapi.yml",
+    "ideogram-subpackage-generate-api-openapi.yml",
+    "ideogram-subpackage-models-api-openapi.yml",
+    "ideogram-subpackage-vision-api-openapi.yml"
+  ],
+  "outputs": [
+    "ideogram-subpackage-datasets-api-openapi.yml",
+    "ideogram-subpackage-generate-api-openapi.yml",
+    "ideogram-subpackage-models-api-openapi.yml",
+    "ideogram-subpackage-vision-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
