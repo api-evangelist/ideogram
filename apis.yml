@@ -111,7 +111,7 @@ common:
   - type: Documentation
     url: https://docs.ideogram.ai/
   - type: OpenAPI
-    url: openapi/ideogram-openapi.yml
+    url: openapi/_original/ideogram-openapi.yml
   - type: Plans
     url: plans/ideogram-plans-pricing.yml
   - type: RateLimits
