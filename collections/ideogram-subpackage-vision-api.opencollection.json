@@ -1,0 +1,50 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_datasets subpackage_vision API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_vision",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Describe",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ideogram.ai/describe",
+            "headers": [
+              {
+                "name": "Api-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "multipart-form",
+              "data": [
+                {
+                  "name": "image_file",
+                  "type": "text",
+                  "value": ""
+                },
+                {
+                  "name": "describe_model_version",
+                  "type": "text",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Describe an image.\n\nSupported image formats include JPEG, PNG, and WebP.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

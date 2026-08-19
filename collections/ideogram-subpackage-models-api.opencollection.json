@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "API Reference subpackage_datasets subpackage_models API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "subpackage_models",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Train a custom Ideogram v3 model",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.ideogram.ai/v1/ideogram-v3/train-model",
+            "headers": [
+              {
+                "name": "Api-Key",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Start training a custom Ideogram v3 model from a dataset using default hyperparameters. The dataset must contain at least 15 images and a maximum of 100 images.\n"
+        },
+        {
+          "info": {
+            "name": "List models",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ideogram.ai/models",
+            "headers": [
+              {
+                "name": "Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Controls which models are returned. Omit to return both owned and shared models combined. `owned` returns only models created by the authenticated user. `shared` returns only models shared with the user's organization via the model registry.\n"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by model status. Applied to owned models only; shared models in the model registry are already filtered to available versions. Example: `?status=TRAINING&status=COMPLETED`\n"
+              }
+            ]
+          },
+          "docs": "Lists custom models for the authenticated user. Use the `scope` parameter to control which models are returned. If omitted, returns both owned models and models shared with the user's organization via the model registry. `owned` returns only models created by the user. `shared` returns only models shared via the model registry, excluding the user's own models.\n"
+        },
+        {
+          "info": {
+            "name": "Get model details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.ideogram.ai/models/:model_id",
+            "headers": [
+              {
+                "name": "Api-Key",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "model_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get detailed information about a specific custom model. The user must either own the model or the model must be shared with the user's organization via the model registry. Returns 404 if the model is not found or not accessible.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

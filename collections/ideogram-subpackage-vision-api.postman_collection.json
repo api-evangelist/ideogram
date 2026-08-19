@@ -1,0 +1,345 @@
+{
+  "item": [
+    {
+      "id": "c2ad9e4c-5314-468d-908c-613aa4748e5d",
+      "name": "subpackage_vision",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "96dccf3c-e9fe-4224-8476-639566068d1c",
+          "name": "Describe",
+          "request": {
+            "name": "Describe",
+            "description": {
+              "content": "Describe an image.\n\nSupported image formats include JPEG, PNG, and WebP.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "describe"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) API key for access control. Use in the header with the name \\\"Api-Key\\\"",
+                "key": "Api-Key",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "multipart/form-data"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image_file",
+                  "type": "file",
+                  "description": "(Required) An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time."
+                },
+                {
+                  "key": "describe_model_version",
+                  "value": "V_3",
+                  "type": "text",
+                  "description": ""
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2fc6b422-c203-40ee-ab4f-dac8f59f7a6a",
+              "name": "Description(s) created successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) API key for access control. Use in the header with the name \\\"Api-Key\\\"",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time.",
+                        "type": "text/plain"
+                      },
+                      "key": "image_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "describe_model_version",
+                      "value": "V_3",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"descriptions\": [\n    {\n      \"text\": \"string\"\n    },\n    {\n      \"text\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "153a86c8-fa0d-4f72-8bb6-435b0ce47b31",
+              "name": "Invalid input provided.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) API key for access control. Use in the header with the name \\\"Api-Key\\\"",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time.",
+                        "type": "text/plain"
+                      },
+                      "key": "image_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "describe_model_version",
+                      "value": "V_3",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "137be43e-f226-436c-b436-cefebccdc7ac",
+              "name": "Image failed the safety check.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) API key for access control. Use in the header with the name \\\"Api-Key\\\"",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time.",
+                        "type": "text/plain"
+                      },
+                      "key": "image_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "describe_model_version",
+                      "value": "V_3",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5eeb61eb-4b96-49f2-a27f-da84d420a88b",
+              "name": "Too many requests.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "describe"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "description": "(Required) API key for access control. Use in the header with the name \\\"Api-Key\\\"",
+                    "key": "Api-Key",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "description": {
+                        "content": "(Required) An image binary (max size 10MB); only JPEG, WebP and PNG formats are supported at this time.",
+                        "type": "text/plain"
+                      },
+                      "key": "image_file",
+                      "value": "<binary>",
+                      "type": "text"
+                    },
+                    {
+                      "description": {
+                        "content": "",
+                        "type": "text/plain"
+                      },
+                      "key": "describe_model_version",
+                      "value": "V_3",
+                      "type": "text"
+                    }
+                  ]
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.ideogram.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "904e67fd-1915-4616-ab87-6f4524d626f5",
+    "name": "API Reference subpackage_datasets subpackage_vision API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}
