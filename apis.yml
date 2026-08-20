@@ -22,6 +22,12 @@ accessModel:
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/ideogram.png
 tags:
+  - Artificial Intelligence
+  - Image-Generation
+  - Text
+  - Realistic
+  - Editing
+tags_raw:
   - AI
   - Image Generation
   - Text
@@ -36,7 +42,8 @@ apis:
   description: The subpackage_datasets API from Ideogram — 3 operation(s) for subpackage_datasets.
   humanURL: https://docs.ideogram.ai/
   baseURL: https://api.ideogram.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_datasets
   properties:
   - type: OpenAPI
@@ -52,7 +59,8 @@ apis:
   description: The subpackage_generate API from Ideogram — 15 operation(s) for subpackage_generate.
   humanURL: https://docs.ideogram.ai/
   baseURL: https://api.ideogram.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_generate
   properties:
   - type: OpenAPI
@@ -68,7 +76,8 @@ apis:
   description: The subpackage_models API from Ideogram — 3 operation(s) for subpackage_models.
   humanURL: https://docs.ideogram.ai/
   baseURL: https://api.ideogram.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_models
   properties:
   - type: OpenAPI
@@ -84,7 +93,8 @@ apis:
   description: The subpackage_vision API from Ideogram — 1 operation(s) for subpackage_vision.
   humanURL: https://docs.ideogram.ai/
   baseURL: https://api.ideogram.ai
-  tags:
+  tags: []
+  tags_raw:
   - subpackage_vision
   properties:
   - type: OpenAPI
