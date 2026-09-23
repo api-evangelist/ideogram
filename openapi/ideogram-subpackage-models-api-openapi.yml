@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: API Reference subpackage_datasets subpackage_models API
+  title: Reference Subpackage Models API
   version: 1.0.0
 servers:
 - url: https://api.ideogram.ai
@@ -11,9 +11,7 @@ paths:
     post:
       operationId: train-model-v-3
       summary: Train a custom Ideogram v3 model
-      description: 'Start training a custom Ideogram v3 model from a dataset using default hyperparameters. The dataset must contain at least 15 images and a maximum of 100 images.
-
-        '
+      description: Start training a custom Ideogram v3 model from a dataset using default hyperparameters. The dataset must contain at least 15 images and a maximum of 100 images.
       tags:
       - subpackage_models
       parameters:
@@ -58,9 +56,7 @@ paths:
     get:
       operationId: list-custom-models
       summary: List models
-      description: 'Lists custom models for the authenticated user. Use the `scope` parameter to control which models are returned. If omitted, returns both owned models and models shared with the user''s organization via the model registry. `owned` returns only models created by the user. `shared` returns only models shared via the model registry, excluding the user''s own models.
-
-        '
+      description: Lists custom models for the authenticated user. Use the `scope` parameter to control which models are returned. If omitted, returns both owned models and models shared with the user's organization via the model registry. `owned` returns only models created by the user. `shared` returns only models shared via the model registry, excluding the user's own models.
       tags:
       - subpackage_models
       parameters:
@@ -105,9 +101,7 @@ paths:
     get:
       operationId: get-custom-model
       summary: Get model details
-      description: 'Get detailed information about a specific custom model. The user must either own the model or the model must be shared with the user''s organization via the model registry. Returns 404 if the model is not found or not accessible.
-
-        '
+      description: Get detailed information about a specific custom model. The user must either own the model or the model must be shared with the user's organization via the model registry. Returns 404 if the model is not found or not accessible.
       tags:
       - subpackage_models
       parameters:
@@ -143,12 +137,6 @@ paths:
                 description: Any type
 components:
   schemas:
-    ModelsGetParametersScope:
-      type: string
-      enum:
-      - owned
-      - shared
-      title: ModelsGetParametersScope
     TrainDatasetModelResponse:
       type: object
       properties:
@@ -170,14 +158,6 @@ components:
       - training_status
       - model_name
       title: TrainDatasetModelResponse
-    GetModelResponse:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/CustomModel'
-      required:
-      - model
-      title: GetModelResponse
     ListModelsResponse:
       type: object
       properties:
@@ -189,17 +169,12 @@ components:
       required:
       - models
       title: ListModelsResponse
-    ModelStatus:
+    ModelsGetParametersScope:
       type: string
       enum:
-      - CREATING
-      - DRAFT
-      - TRAINING
-      - COMPLETED
-      - ERRORED
-      - ARCHIVED
-      description: The status of a custom model.
-      title: ModelStatus
+      - owned
+      - shared
+      title: ModelsGetParametersScope
     TrainModelV3Request:
       type: object
       properties:
@@ -270,6 +245,25 @@ components:
       - is_owned
       description: A custom model.
       title: CustomModel
+    GetModelResponse:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/CustomModel'
+      required:
+      - model
+      title: GetModelResponse
+    ModelStatus:
+      type: string
+      enum:
+      - CREATING
+      - DRAFT
+      - TRAINING
+      - COMPLETED
+      - ERRORED
+      - ARCHIVED
+      description: The status of a custom model.
+      title: ModelStatus
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

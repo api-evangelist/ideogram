@@ -1,10 +1,7 @@
 {
   "provider": "ideogram",
   "sources": [
-    "ideogram-subpackage-datasets-api-openapi.yml",
-    "ideogram-subpackage-generate-api-openapi.yml",
-    "ideogram-subpackage-models-api-openapi.yml",
-    "ideogram-subpackage-vision-api-openapi.yml"
+    "_original/ideogram-openapi.yml"
   ],
   "outputs": [
     "ideogram-subpackage-datasets-api-openapi.yml",
@@ -15,6 +12,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "ideogram-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "ideogram-openapi.yml: declared missing tag: subpackage_datasets",
+    "ideogram-openapi.yml: declared missing tag: subpackage_generate",
+    "ideogram-openapi.yml: declared missing tag: subpackage_models",
+    "ideogram-openapi.yml: declared missing tag: subpackage_vision",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "ideogram-subpackage-datasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ideogram-subpackage-generate-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ideogram-subpackage-models-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "ideogram-subpackage-vision-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }
