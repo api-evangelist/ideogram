@@ -158,41 +158,6 @@ components:
       - training_status
       - model_name
       title: TrainDatasetModelResponse
-    ListModelsResponse:
-      type: object
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomModel'
-          description: List of models.
-      required:
-      - models
-      title: ListModelsResponse
-    ModelsGetParametersScope:
-      type: string
-      enum:
-      - owned
-      - shared
-      title: ModelsGetParametersScope
-    TrainModelV3Request:
-      type: object
-      properties:
-        dataset_id:
-          type: string
-          description: ID of the dataset to train the model from.
-        model_name:
-          type: string
-          description: 'Name for the trained model. Must be 5-30 characters, alphanumeric with spaces and hyphens allowed.
-
-            '
-      required:
-      - dataset_id
-      - model_name
-      description: 'Training request for a custom Ideogram v3 model using default hyperparameters.
-
-        '
-      title: TrainModelV3Request
     CustomModel:
       type: object
       properties:
@@ -253,6 +218,12 @@ components:
       required:
       - model
       title: GetModelResponse
+    ModelsGetParametersScope:
+      type: string
+      enum:
+      - owned
+      - shared
+      title: ModelsGetParametersScope
     ModelStatus:
       type: string
       enum:
@@ -264,6 +235,35 @@ components:
       - ARCHIVED
       description: The status of a custom model.
       title: ModelStatus
+    TrainModelV3Request:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: ID of the dataset to train the model from.
+        model_name:
+          type: string
+          description: 'Name for the trained model. Must be 5-30 characters, alphanumeric with spaces and hyphens allowed.
+
+            '
+      required:
+      - dataset_id
+      - model_name
+      description: 'Training request for a custom Ideogram v3 model using default hyperparameters.
+
+        '
+      title: TrainModelV3Request
+    ListModelsResponse:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomModel'
+          description: List of models.
+      required:
+      - models
+      title: ListModelsResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

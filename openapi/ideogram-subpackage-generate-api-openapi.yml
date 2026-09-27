@@ -1313,46 +1313,69 @@ paths:
               - model
 components:
   schemas:
-    GenerateImageSafetyError:
+    GenerateImageRequest:
       type: object
       properties:
-        error:
-          type: string
+        image_request:
+          $ref: '#/components/schemas/ImageRequest'
       required:
-      - error
-      title: GenerateImageSafetyError
-    V1EditImageObject:
+      - image_request
+      title: GenerateImageRequest
+    V1EditImagesResponse:
       type: object
       properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The direct link to the image generated.
-        prompt:
+        created:
           type: string
-          description: The prompt used for the generation. This may be different from the original prompt.
-        resolution:
-          type: string
-          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
-        upscaled_resolution:
-          type: string
-          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
-        is_image_safe:
-          type: boolean
-          description: Whether this request passes safety checks. If false, the url field will be empty.
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-        style_type:
-          $ref: '#/components/schemas/StyleTypeV3'
+          format: date-time
+          description: The time the request was created.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/V1EditImageObject'
+          description: A list of ImageObjects that contain the edited image(s).
       required:
-      - prompt
-      - resolution
-      - is_image_safe
-      - seed
-      title: V1EditImageObject
+      - created
+      - data
+      description: 'The response which contains information about the edited image, including the download link.
+
+        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
+      title: V1EditImagesResponse
+    AspectRatio:
+      type: string
+      enum:
+      - ASPECT_10_16
+      - ASPECT_16_10
+      - ASPECT_9_16
+      - ASPECT_16_9
+      - ASPECT_3_2
+      - ASPECT_2_3
+      - ASPECT_4_3
+      - ASPECT_3_4
+      - ASPECT_1_1
+      - ASPECT_1_3
+      - ASPECT_3_1
+      description: (Cannot be used in conjunction with resolution) The aspect ratio to use for image generation, which determines the image's resolution. Defaults to ASPECT_1_1.
+      title: AspectRatio
+    StyleTypeV3:
+      type: string
+      enum:
+      - AUTO
+      - GENERAL
+      - REALISTIC
+      - DESIGN
+      - FICTION
+      default: GENERAL
+      description: The style type to generate with.
+      title: StyleTypeV3
+    StyleCode:
+      type: string
+      description: The 8 character hexadecimal representation of the style code.
+      title: StyleCode
+    NumImages:
+      type: integer
+      default: 1
+      description: The number of images to generate.
+      title: NumImages
     LayerizeTextResponse:
       type: object
       properties:
@@ -1379,55 +1402,7 @@ components:
 
         '
       title: LayerizeTextResponse
-    ModelEnum:
-      type: string
-      enum:
-      - V_1
-      - V_1_TURBO
-      - V_2
-      - V_2_TURBO
-      - V_2A
-      - V_2A_TURBO
-      - AUTO
-      default: V_2
-      description: The model used to generate an image or edit one. /generate and /remix supports all model types, however, /edit is only supported for V_2 and V_2_TURBO.
-      title: ModelEnum
-    StyleCode:
-      type: string
-      description: The 8 character hexadecimal representation of the style code.
-      title: StyleCode
-    ImageGenerationObjectV3:
-      type: object
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The direct link to the image generated.
-        prompt:
-          type: string
-          description: The prompt used for the generation. This may be different from the original prompt.
-        resolution:
-          $ref: '#/components/schemas/ResolutionV3'
-        upscaled_resolution:
-          type: string
-          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
-        is_image_safe:
-          type: boolean
-          description: Whether this request passes safety checks. If false, the url field will be empty.
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-        style_type:
-          $ref: '#/components/schemas/StyleTypeV3'
-      required:
-      - prompt
-      - resolution
-      - is_image_safe
-      - seed
-      title: ImageGenerationObjectV3
-    RemoveBackgroundResponse:
+    ImageGenerationResponseV3:
       type: object
       properties:
         created:
@@ -1437,15 +1412,15 @@ components:
         data:
           type: array
           items:
-            $ref: '#/components/schemas/RemoveBackgroundImageObject'
-          description: A list containing the single foreground image. The endpoint always returns exactly one entry.
+            $ref: '#/components/schemas/ImageGenerationObjectV3'
+          description: A list of ImageObjects that contain the generated image(s).
       required:
       - created
       - data
-      description: 'The response containing the foreground image with the background removed.
+      description: 'The response which contains information about the generated image, including the download link.
 
-        Image links are available for a limited period of time; if you would like to keep the image, you must download it.'
-      title: RemoveBackgroundResponse
+        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
+      title: ImageGenerationResponseV3
     StylePresetV3:
       type: string
       enum:
@@ -1513,6 +1488,294 @@ components:
       - WOODBLOCK_PRINT
       description: A predefined style preset that applies a specific artistic style to the generated image.
       title: StylePresetV3
+    GenerateImageResponse:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The time the request was created.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ImageObject'
+          description: A list of ImageObjects that contain the generated image(s).
+      required:
+      - created
+      - data
+      description: 'The response which contains information about the generated image, including the download link.
+
+        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
+      title: GenerateImageResponse
+    InitialImageRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt to use to generate the image.
+        aspect_ratio:
+          $ref: '#/components/schemas/AspectRatio'
+        model:
+          $ref: '#/components/schemas/ModelEnum'
+        magic_prompt_option:
+          $ref: '#/components/schemas/MagicPromptOption'
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+        style_type:
+          $ref: '#/components/schemas/StyleType'
+        negative_prompt:
+          type: string
+          description: Only available for model versions V_1, V_1_TURBO, V_2 and V_2_TURBO. Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.
+        num_images:
+          type: integer
+          default: 1
+          description: The number of images to generate.
+        resolution:
+          $ref: '#/components/schemas/Resolution'
+        color_palette:
+          $ref: '#/components/schemas/ColorPaletteWithPresetNameOrMembers'
+        image_weight:
+          type: integer
+          default: 50
+      required:
+      - prompt
+      description: A request to generate a new image using a provided image and a prompt.
+      title: InitialImageRequest
+    StyleType:
+      type: string
+      enum:
+      - AUTO
+      - GENERAL
+      - FICTION
+      - REALISTIC
+      - DESIGN
+      - RENDER_3D
+      - ANIME
+      description: The style type to generate with; this is only applicable for models V_2 and above and should not be specified for model versions V_1.
+      title: StyleType
+    ColorPaletteMember:
+      type: object
+      properties:
+        color_hex:
+          type: string
+          description: The hexadecimal representation of the color with an optional chosen weight.
+        color_weight:
+          type: number
+          format: double
+          description: The weight of the color in the color palette.
+      required:
+      - color_hex
+      description: A member of a color palette.
+      title: ColorPaletteMember
+    AspectRatioV3:
+      type: string
+      enum:
+      - 1x3
+      - 3x1
+      - 1x2
+      - 2x1
+      - 9x16
+      - 16x9
+      - 10x16
+      - 16x10
+      - 2x3
+      - 3x2
+      - 3x4
+      - 4x3
+      - 4x5
+      - 5x4
+      - 1x1
+      description: The aspect ratio to use for image generation, which determines the image's resolution. Cannot be used in conjunction with resolution. Defaults to 1x1.
+      title: AspectRatioV3
+    V1IdeogramV3GenerateTransparentPostRequestBodyContentMultipartFormDataSchemaRenderingSpeed:
+      type: string
+      enum:
+      - TURBO
+      - DEFAULT
+      - QUALITY
+      default: DEFAULT
+      description: The rendering speed to use. FLASH is not supported for transparent-background generation; requests with rendering_speed=FLASH will return a 400.
+      title: V1IdeogramV3GenerateTransparentPostRequestBodyContentMultipartFormDataSchemaRenderingSpeed
+    Seed:
+      type: integer
+      description: Random seed. Set for reproducible generation.
+      title: Seed
+    ImageRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: The prompt to use to generate the image.
+        aspect_ratio:
+          $ref: '#/components/schemas/AspectRatio'
+        model:
+          $ref: '#/components/schemas/ModelEnum'
+        magic_prompt_option:
+          $ref: '#/components/schemas/MagicPromptOption'
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+        style_type:
+          $ref: '#/components/schemas/StyleType'
+        negative_prompt:
+          type: string
+          description: Only available for model versions V_1, V_1_TURBO, V_2 and V_2_TURBO. Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.
+        num_images:
+          type: integer
+          default: 1
+          description: The number of images to generate.
+        resolution:
+          $ref: '#/components/schemas/Resolution'
+        color_palette:
+          $ref: '#/components/schemas/ColorPaletteWithPresetNameOrMembers'
+      required:
+      - prompt
+      title: ImageRequest
+    ColorPaletteWithPresetName:
+      type: object
+      properties:
+        name:
+          $ref: '#/components/schemas/ColorPalettePresetName'
+      required:
+      - name
+      title: ColorPaletteWithPresetName
+    MagicPromptOption:
+      type: string
+      enum:
+      - AUTO
+      - 'ON'
+      - 'OFF'
+      description: Determine if MagicPrompt should be used in generating the request or not.
+      title: MagicPromptOption
+    RemoveBackgroundResponse:
+      type: object
+      properties:
+        created:
+          type: string
+          format: date-time
+          description: The time the request was created.
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/RemoveBackgroundImageObject'
+          description: A list containing the single foreground image. The endpoint always returns exactly one entry.
+      required:
+      - created
+      - data
+      description: 'The response containing the foreground image with the background removed.
+
+        Image links are available for a limited period of time; if you would like to keep the image, you must download it.'
+      title: RemoveBackgroundResponse
+    RenderingSpeed:
+      type: string
+      enum:
+      - FLASH
+      - TURBO
+      - DEFAULT
+      - QUALITY
+      default: DEFAULT
+      description: The rendering speed to use.
+      title: RenderingSpeed
+    ImageGenerationObjectV3:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The direct link to the image generated.
+        prompt:
+          type: string
+          description: The prompt used for the generation. This may be different from the original prompt.
+        resolution:
+          $ref: '#/components/schemas/ResolutionV3'
+        upscaled_resolution:
+          type: string
+          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
+        is_image_safe:
+          type: boolean
+          description: Whether this request passes safety checks. If false, the url field will be empty.
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+        style_type:
+          $ref: '#/components/schemas/StyleTypeV3'
+      required:
+      - prompt
+      - resolution
+      - is_image_safe
+      - seed
+      title: ImageGenerationObjectV3
+    ImageObject:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The direct link to the image generated.
+        prompt:
+          type: string
+          description: The prompt used for the generation. This may be different from the original prompt.
+        resolution:
+          type: string
+          description: The resolution of the final image.
+        upscaled_resolution:
+          type: string
+          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
+        is_image_safe:
+          type: boolean
+          description: Whether this request passes safety checks. If false, the url field will be empty.
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+        style_type:
+          $ref: '#/components/schemas/StyleType'
+      required:
+      - prompt
+      - resolution
+      - is_image_safe
+      - seed
+      title: ImageObject
+    UpscaleInitialImageRequest:
+      type: object
+      properties:
+        prompt:
+          type: string
+          description: An optional prompt to guide the upscale
+        resemblance:
+          type: integer
+          default: 50
+        detail:
+          type: integer
+          default: 50
+        magic_prompt_option:
+          $ref: '#/components/schemas/MagicPromptOption'
+        num_images:
+          type: integer
+          default: 1
+          description: The number of images to generate.
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+      description: A request to upscale a provided image with the help of an optional prompt.
+      title: UpscaleInitialImageRequest
+    ColorPalettePresetName:
+      type: string
+      enum:
+      - EMBER
+      - FRESH
+      - JUNGLE
+      - MAGIC
+      - MELON
+      - MOSAIC
+      - PASTEL
+      - ULTRAMARINE
+      description: A color palette preset value.
+      title: ColorPalettePresetName
     ColorPaletteWithMembers:
       type: object
       properties:
@@ -1531,6 +1794,61 @@ components:
       - members
       description: A color palette represented only via its members. Cannot be used in conjunction with preset name.
       title: ColorPaletteWithMembers
+    GenerateImageSafetyError:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+      - error
+      title: GenerateImageSafetyError
+    UpscaleFactor:
+      type: string
+      enum:
+      - X1
+      - X2
+      - X4
+      default: X1
+      description: Upscale the initially generated image by the given factor. Upscale factors other than X1 will incur additional cost.
+      title: UpscaleFactor
+    ColorPaletteWithPresetNameOrMembers:
+      oneOf:
+      - $ref: '#/components/schemas/ColorPaletteWithPresetName'
+      - $ref: '#/components/schemas/ColorPaletteWithMembers'
+      description: A color palette for generation, must EITHER be specified via one of the presets (name) or explicitly via hexadecimal representations of the color with optional weights (members). Not supported by V_1, V_1_TURBO, V_2A and V_2A_TURBO models.
+      title: ColorPaletteWithPresetNameOrMembers
+    V1EditImageObject:
+      type: object
+      properties:
+        url:
+          type:
+          - string
+          - 'null'
+          format: uri
+          description: The direct link to the image generated.
+        prompt:
+          type: string
+          description: The prompt used for the generation. This may be different from the original prompt.
+        resolution:
+          type: string
+          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
+        upscaled_resolution:
+          type: string
+          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
+        is_image_safe:
+          type: boolean
+          description: Whether this request passes safety checks. If false, the url field will be empty.
+        seed:
+          type: integer
+          description: Random seed. Set for reproducible generation.
+        style_type:
+          $ref: '#/components/schemas/StyleTypeV3'
+      required:
+      - prompt
+      - resolution
+      - is_image_safe
+      - seed
+      title: V1EditImageObject
     ResolutionV3:
       type: string
       enum:
@@ -1605,192 +1923,19 @@ components:
       - 1536x640
       description: The resolutions supported for Ideogram 3.0.
       title: ResolutionV3
-    InitialImageRequest:
-      type: object
-      properties:
-        prompt:
-          type: string
-          description: The prompt to use to generate the image.
-        aspect_ratio:
-          $ref: '#/components/schemas/AspectRatio'
-        model:
-          $ref: '#/components/schemas/ModelEnum'
-        magic_prompt_option:
-          $ref: '#/components/schemas/MagicPromptOption'
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-        style_type:
-          $ref: '#/components/schemas/StyleType'
-        negative_prompt:
-          type: string
-          description: Only available for model versions V_1, V_1_TURBO, V_2 and V_2_TURBO. Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.
-        num_images:
-          type: integer
-          default: 1
-          description: The number of images to generate.
-        resolution:
-          $ref: '#/components/schemas/Resolution'
-        color_palette:
-          $ref: '#/components/schemas/ColorPaletteWithPresetNameOrMembers'
-        image_weight:
-          type: integer
-          default: 50
-      required:
-      - prompt
-      description: A request to generate a new image using a provided image and a prompt.
-      title: InitialImageRequest
-    V1IdeogramV3GenerateTransparentPostRequestBodyContentMultipartFormDataSchemaRenderingSpeed:
+    ModelEnum:
       type: string
       enum:
-      - TURBO
-      - DEFAULT
-      - QUALITY
-      default: DEFAULT
-      description: The rendering speed to use. FLASH is not supported for transparent-background generation; requests with rendering_speed=FLASH will return a 400.
-      title: V1IdeogramV3GenerateTransparentPostRequestBodyContentMultipartFormDataSchemaRenderingSpeed
-    ColorPaletteMember:
-      type: object
-      properties:
-        color_hex:
-          type: string
-          description: The hexadecimal representation of the color with an optional chosen weight.
-        color_weight:
-          type: number
-          format: double
-          description: The weight of the color in the color palette.
-      required:
-      - color_hex
-      description: A member of a color palette.
-      title: ColorPaletteMember
-    StyleCodes:
-      type: array
-      items:
-        $ref: '#/components/schemas/StyleCode'
-      description: A list of 8 character hexadecimal codes representing the style of the image. Cannot be used in conjunction with style_reference_images or style_type.
-      title: StyleCodes
-    ColorPaletteWithPresetNameOrMembers:
-      oneOf:
-      - $ref: '#/components/schemas/ColorPaletteWithPresetName'
-      - $ref: '#/components/schemas/ColorPaletteWithMembers'
-      description: A color palette for generation, must EITHER be specified via one of the presets (name) or explicitly via hexadecimal representations of the color with optional weights (members). Not supported by V_1, V_1_TURBO, V_2A and V_2A_TURBO models.
-      title: ColorPaletteWithPresetNameOrMembers
-    StyleType:
-      type: string
-      enum:
+      - V_1
+      - V_1_TURBO
+      - V_2
+      - V_2_TURBO
+      - V_2A
+      - V_2A_TURBO
       - AUTO
-      - GENERAL
-      - FICTION
-      - REALISTIC
-      - DESIGN
-      - RENDER_3D
-      - ANIME
-      description: The style type to generate with; this is only applicable for models V_2 and above and should not be specified for model versions V_1.
-      title: StyleType
-    MagicPromptOption:
-      type: string
-      enum:
-      - AUTO
-      - 'ON'
-      - 'OFF'
-      description: Determine if MagicPrompt should be used in generating the request or not.
-      title: MagicPromptOption
-    UpscaleInitialImageRequest:
-      type: object
-      properties:
-        prompt:
-          type: string
-          description: An optional prompt to guide the upscale
-        resemblance:
-          type: integer
-          default: 50
-        detail:
-          type: integer
-          default: 50
-        magic_prompt_option:
-          $ref: '#/components/schemas/MagicPromptOption'
-        num_images:
-          type: integer
-          default: 1
-          description: The number of images to generate.
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-      description: A request to upscale a provided image with the help of an optional prompt.
-      title: UpscaleInitialImageRequest
-    GenerateImageResponse:
-      type: object
-      properties:
-        created:
-          type: string
-          format: date-time
-          description: The time the request was created.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageObject'
-          description: A list of ImageObjects that contain the generated image(s).
-      required:
-      - created
-      - data
-      description: 'The response which contains information about the generated image, including the download link.
-
-        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
-      title: GenerateImageResponse
-    ImageObject:
-      type: object
-      properties:
-        url:
-          type:
-          - string
-          - 'null'
-          format: uri
-          description: The direct link to the image generated.
-        prompt:
-          type: string
-          description: The prompt used for the generation. This may be different from the original prompt.
-        resolution:
-          type: string
-          description: The resolution of the final image.
-        upscaled_resolution:
-          type: string
-          description: Output resolution, only used if operations alters image dimensions, such as upscale, crop etc.
-        is_image_safe:
-          type: boolean
-          description: Whether this request passes safety checks. If false, the url field will be empty.
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-        style_type:
-          $ref: '#/components/schemas/StyleType'
-      required:
-      - prompt
-      - resolution
-      - is_image_safe
-      - seed
-      title: ImageObject
-    ColorPalettePresetName:
-      type: string
-      enum:
-      - EMBER
-      - FRESH
-      - JUNGLE
-      - MAGIC
-      - MELON
-      - MOSAIC
-      - PASTEL
-      - ULTRAMARINE
-      description: A color palette preset value.
-      title: ColorPalettePresetName
-    UpscaleFactor:
-      type: string
-      enum:
-      - X1
-      - X2
-      - X4
-      default: X1
-      description: Upscale the initially generated image by the given factor. Upscale factors other than X1 will incur additional cost.
-      title: UpscaleFactor
+      default: V_2
+      description: The model used to generate an image or edit one. /generate and /remix supports all model types, however, /edit is only supported for V_2 and V_2_TURBO.
+      title: ModelEnum
     RemoveBackgroundImageObject:
       type: object
       properties:
@@ -1806,61 +1951,12 @@ components:
       required:
       - is_image_safe
       title: RemoveBackgroundImageObject
-    V1EditImagesResponse:
-      type: object
-      properties:
-        created:
-          type: string
-          format: date-time
-          description: The time the request was created.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/V1EditImageObject'
-          description: A list of ImageObjects that contain the edited image(s).
-      required:
-      - created
-      - data
-      description: 'The response which contains information about the edited image, including the download link.
-
-        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
-      title: V1EditImagesResponse
-    NumImages:
-      type: integer
-      default: 1
-      description: The number of images to generate.
-      title: NumImages
-    Seed:
-      type: integer
-      description: Random seed. Set for reproducible generation.
-      title: Seed
-    ColorPaletteWithPresetName:
-      type: object
-      properties:
-        name:
-          $ref: '#/components/schemas/ColorPalettePresetName'
-      required:
-      - name
-      title: ColorPaletteWithPresetName
-    ImageGenerationResponseV3:
-      type: object
-      properties:
-        created:
-          type: string
-          format: date-time
-          description: The time the request was created.
-        data:
-          type: array
-          items:
-            $ref: '#/components/schemas/ImageGenerationObjectV3'
-          description: A list of ImageObjects that contain the generated image(s).
-      required:
-      - created
-      - data
-      description: 'The response which contains information about the generated image, including the download link.
-
-        Images links are available for a limited period of time; if you would like to keep the image, you must download it.'
-      title: ImageGenerationResponseV3
+    StyleCodes:
+      type: array
+      items:
+        $ref: '#/components/schemas/StyleCode'
+      description: A list of 8 character hexadecimal codes representing the style of the image. Cannot be used in conjunction with style_reference_images or style_type.
+      title: StyleCodes
     Resolution:
       type: string
       enum:
@@ -1944,102 +2040,6 @@ components:
       - RESOLUTION_1536_640
       description: (For model_version for 2.0 only, cannot be used in conjunction with aspect_ratio) The resolution to use for image generation, represented in width x height. If not specified, defaults to using aspect_ratio.
       title: Resolution
-    AspectRatioV3:
-      type: string
-      enum:
-      - 1x3
-      - 3x1
-      - 1x2
-      - 2x1
-      - 9x16
-      - 16x9
-      - 10x16
-      - 16x10
-      - 2x3
-      - 3x2
-      - 3x4
-      - 4x3
-      - 4x5
-      - 5x4
-      - 1x1
-      description: The aspect ratio to use for image generation, which determines the image's resolution. Cannot be used in conjunction with resolution. Defaults to 1x1.
-      title: AspectRatioV3
-    GenerateImageRequest:
-      type: object
-      properties:
-        image_request:
-          $ref: '#/components/schemas/ImageRequest'
-      required:
-      - image_request
-      title: GenerateImageRequest
-    RenderingSpeed:
-      type: string
-      enum:
-      - FLASH
-      - TURBO
-      - DEFAULT
-      - QUALITY
-      default: DEFAULT
-      description: The rendering speed to use.
-      title: RenderingSpeed
-    AspectRatio:
-      type: string
-      enum:
-      - ASPECT_10_16
-      - ASPECT_16_10
-      - ASPECT_9_16
-      - ASPECT_16_9
-      - ASPECT_3_2
-      - ASPECT_2_3
-      - ASPECT_4_3
-      - ASPECT_3_4
-      - ASPECT_1_1
-      - ASPECT_1_3
-      - ASPECT_3_1
-      description: (Cannot be used in conjunction with resolution) The aspect ratio to use for image generation, which determines the image's resolution. Defaults to ASPECT_1_1.
-      title: AspectRatio
-    ImageRequest:
-      type: object
-      properties:
-        prompt:
-          type: string
-          description: The prompt to use to generate the image.
-        aspect_ratio:
-          $ref: '#/components/schemas/AspectRatio'
-        model:
-          $ref: '#/components/schemas/ModelEnum'
-        magic_prompt_option:
-          $ref: '#/components/schemas/MagicPromptOption'
-        seed:
-          type: integer
-          description: Random seed. Set for reproducible generation.
-        style_type:
-          $ref: '#/components/schemas/StyleType'
-        negative_prompt:
-          type: string
-          description: Only available for model versions V_1, V_1_TURBO, V_2 and V_2_TURBO. Description of what to exclude from an image. Descriptions in the prompt take precedence to descriptions in the negative prompt.
-        num_images:
-          type: integer
-          default: 1
-          description: The number of images to generate.
-        resolution:
-          $ref: '#/components/schemas/Resolution'
-        color_palette:
-          $ref: '#/components/schemas/ColorPaletteWithPresetNameOrMembers'
-      required:
-      - prompt
-      title: ImageRequest
-    StyleTypeV3:
-      type: string
-      enum:
-      - AUTO
-      - GENERAL
-      - REALISTIC
-      - DESIGN
-      - FICTION
-      default: GENERAL
-      description: The style type to generate with.
-      title: StyleTypeV3
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

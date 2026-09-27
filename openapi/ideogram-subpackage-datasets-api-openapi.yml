@@ -172,45 +172,39 @@ paths:
               - files
 components:
   schemas:
-    UploadDatasetAssetsResponse:
+    AssetType:
+      type: string
+      enum:
+      - ASSET
+      - CANVAS_ASSET
+      - LAYERED_ASSET
+      - RESPONSE
+      - UPLOAD
+      title: AssetType
+    ListDatasetsResponse:
       type: object
       properties:
-        total_count:
-          type: integer
-          description: Total number of images processed.
-        success_count:
-          type: integer
-          description: Number of images successfully uploaded.
-        failure_count:
-          type: integer
-          description: Number of images that failed to upload.
-        successful_assets:
+        datasets:
           type: array
           items:
-            $ref: '#/components/schemas/DatasetUploadSucceededAsset'
-          description: Details of successfully uploaded assets.
-        failed_assets:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetUploadFailedAsset'
-          description: Details of assets that failed to upload.
+            $ref: '#/components/schemas/Dataset'
+          description: List of datasets for the authenticated user.
       required:
-      - total_count
-      - success_count
-      - failure_count
-      title: UploadDatasetAssetsResponse
-    AssetIdentifier:
+      - datasets
+      title: ListDatasetsResponse
+    DatasetUploadFailedAsset:
       type: object
       properties:
-        asset_type:
-          $ref: '#/components/schemas/AssetType'
-        asset_id:
-          type: string
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the failed image.
+        failure_reason:
+          $ref: '#/components/schemas/DatasetAssetFailureReason'
       required:
-      - asset_type
-      - asset_id
-      description: An identifier for an ideogram asset.
-      title: AssetIdentifier
+      - failure_reason
+      title: DatasetUploadFailedAsset
     Dataset:
       type: object
       properties:
@@ -236,56 +230,6 @@ components:
       - creation_time
       description: A dataset for organizing training images.
       title: Dataset
-    DatasetUploadSucceededAsset:
-      type: object
-      properties:
-        asset_identifier:
-          $ref: '#/components/schemas/AssetIdentifier'
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Original filename of the uploaded image.
-      required:
-      - asset_identifier
-      title: DatasetUploadSucceededAsset
-    AssetType:
-      type: string
-      enum:
-      - ASSET
-      - CANVAS_ASSET
-      - LAYERED_ASSET
-      - RESPONSE
-      - UPLOAD
-      title: AssetType
-    DatasetFile:
-      type: object
-      properties:
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Filename of the file in the dataset.
-        file_size_bytes:
-          type:
-          - integer
-          - 'null'
-          description: Size of the file in bytes, if available.
-      required:
-      - file_name
-      description: A file in a dataset.
-      title: DatasetFile
-    ListDatasetsResponse:
-      type: object
-      properties:
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Dataset'
-          description: List of datasets for the authenticated user.
-      required:
-      - datasets
-      title: ListDatasetsResponse
     GetDatasetResponse:
       type: object
       properties:
@@ -313,19 +257,46 @@ components:
       - custom_model_ids
       description: Detailed view of a dataset, including its files.
       title: GetDatasetResponse
-    DatasetUploadFailedAsset:
+    UploadDatasetAssetsResponse:
       type: object
       properties:
+        total_count:
+          type: integer
+          description: Total number of images processed.
+        success_count:
+          type: integer
+          description: Number of images successfully uploaded.
+        failure_count:
+          type: integer
+          description: Number of images that failed to upload.
+        successful_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadSucceededAsset'
+          description: Details of successfully uploaded assets.
+        failed_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadFailedAsset'
+          description: Details of assets that failed to upload.
+      required:
+      - total_count
+      - success_count
+      - failure_count
+      title: UploadDatasetAssetsResponse
+    DatasetUploadSucceededAsset:
+      type: object
+      properties:
+        asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
         file_name:
           type:
           - string
           - 'null'
-          description: Original filename of the failed image.
-        failure_reason:
-          $ref: '#/components/schemas/DatasetAssetFailureReason'
+          description: Original filename of the uploaded image.
       required:
-      - failure_reason
-      title: DatasetUploadFailedAsset
+      - asset_identifier
+      title: DatasetUploadSucceededAsset
     DatasetAssetFailureReason:
       type: string
       enum:
@@ -347,6 +318,35 @@ components:
       required:
       - name
       title: CreateDatasetRequest
+    AssetIdentifier:
+      type: object
+      properties:
+        asset_type:
+          $ref: '#/components/schemas/AssetType'
+        asset_id:
+          type: string
+      required:
+      - asset_type
+      - asset_id
+      description: An identifier for an ideogram asset.
+      title: AssetIdentifier
+    DatasetFile:
+      type: object
+      properties:
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Filename of the file in the dataset.
+        file_size_bytes:
+          type:
+          - integer
+          - 'null'
+          description: Size of the file in bytes, if available.
+      required:
+      - file_name
+      description: A file in a dataset.
+      title: DatasetFile
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
