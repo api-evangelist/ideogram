@@ -181,17 +181,19 @@ components:
       - RESPONSE
       - UPLOAD
       title: AssetType
-    ListDatasetsResponse:
+    DatasetUploadSucceededAsset:
       type: object
       properties:
-        datasets:
-          type: array
-          items:
-            $ref: '#/components/schemas/Dataset'
-          description: List of datasets for the authenticated user.
+        asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the uploaded image.
       required:
-      - datasets
-      title: ListDatasetsResponse
+      - asset_identifier
+      title: DatasetUploadSucceededAsset
     DatasetUploadFailedAsset:
       type: object
       properties:
@@ -205,31 +207,18 @@ components:
       required:
       - failure_reason
       title: DatasetUploadFailedAsset
-    Dataset:
-      type: object
-      properties:
-        dataset_id:
-          type: string
-          description: Unique identifier for the dataset.
-        name:
-          type: string
-          description: Display name of the dataset.
-        user_id:
-          type: string
-          description: ID of the user who owns this dataset.
-        creation_time:
-          type: string
-          format: date-time
-          description: When the dataset was created.
-        cover_asset_identifier:
-          $ref: '#/components/schemas/AssetIdentifier'
-      required:
-      - dataset_id
-      - name
-      - user_id
-      - creation_time
-      description: A dataset for organizing training images.
-      title: Dataset
+    DatasetAssetFailureReason:
+      type: string
+      enum:
+      - FAILED_SAFETY_CHECK
+      - FILE_TOO_LARGE
+      - INTERNAL_ERROR
+      - INVALID_CAPTION
+      - INVALID_IMAGE
+      - INVALID_ZIP
+      - TOO_MANY_IMAGES
+      description: Reason why an asset failed to upload.
+      title: DatasetAssetFailureReason
     GetDatasetResponse:
       type: object
       properties:
@@ -257,6 +246,68 @@ components:
       - custom_model_ids
       description: Detailed view of a dataset, including its files.
       title: GetDatasetResponse
+    ListDatasetsResponse:
+      type: object
+      properties:
+        datasets:
+          type: array
+          items:
+            $ref: '#/components/schemas/Dataset'
+          description: List of datasets for the authenticated user.
+      required:
+      - datasets
+      title: ListDatasetsResponse
+    DatasetFile:
+      type: object
+      properties:
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Filename of the file in the dataset.
+        file_size_bytes:
+          type:
+          - integer
+          - 'null'
+          description: Size of the file in bytes, if available.
+      required:
+      - file_name
+      description: A file in a dataset.
+      title: DatasetFile
+    CreateDatasetRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name of the dataset.
+      required:
+      - name
+      title: CreateDatasetRequest
+    Dataset:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: Unique identifier for the dataset.
+        name:
+          type: string
+          description: Display name of the dataset.
+        user_id:
+          type: string
+          description: ID of the user who owns this dataset.
+        creation_time:
+          type: string
+          format: date-time
+          description: When the dataset was created.
+        cover_asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
+      required:
+      - dataset_id
+      - name
+      - user_id
+      - creation_time
+      description: A dataset for organizing training images.
+      title: Dataset
     UploadDatasetAssetsResponse:
       type: object
       properties:
@@ -284,40 +335,6 @@ components:
       - success_count
       - failure_count
       title: UploadDatasetAssetsResponse
-    DatasetUploadSucceededAsset:
-      type: object
-      properties:
-        asset_identifier:
-          $ref: '#/components/schemas/AssetIdentifier'
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Original filename of the uploaded image.
-      required:
-      - asset_identifier
-      title: DatasetUploadSucceededAsset
-    DatasetAssetFailureReason:
-      type: string
-      enum:
-      - FAILED_SAFETY_CHECK
-      - FILE_TOO_LARGE
-      - INTERNAL_ERROR
-      - INVALID_CAPTION
-      - INVALID_IMAGE
-      - INVALID_ZIP
-      - TOO_MANY_IMAGES
-      description: Reason why an asset failed to upload.
-      title: DatasetAssetFailureReason
-    CreateDatasetRequest:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name of the dataset.
-      required:
-      - name
-      title: CreateDatasetRequest
     AssetIdentifier:
       type: object
       properties:
@@ -330,23 +347,6 @@ components:
       - asset_id
       description: An identifier for an ideogram asset.
       title: AssetIdentifier
-    DatasetFile:
-      type: object
-      properties:
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Filename of the file in the dataset.
-        file_size_bytes:
-          type:
-          - integer
-          - 'null'
-          description: Size of the file in bytes, if available.
-      required:
-      - file_name
-      description: A file in a dataset.
-      title: DatasetFile
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

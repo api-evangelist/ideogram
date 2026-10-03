@@ -137,27 +137,17 @@ paths:
                 description: Any type
 components:
   schemas:
-    TrainDatasetModelResponse:
-      type: object
-      properties:
-        model_id:
-          type: string
-          description: Unique identifier of the created model.
-        dataset_id:
-          type: string
-          description: Identifier of the dataset used for training.
-        training_status:
-          type: string
-          description: Current training status of the model.
-        model_name:
-          type: string
-          description: Name of the model.
-      required:
-      - model_id
-      - dataset_id
-      - training_status
-      - model_name
-      title: TrainDatasetModelResponse
+    ModelStatus:
+      type: string
+      enum:
+      - CREATING
+      - DRAFT
+      - TRAINING
+      - COMPLETED
+      - ERRORED
+      - ARCHIVED
+      description: The status of a custom model.
+      title: ModelStatus
     CustomModel:
       type: object
       properties:
@@ -210,31 +200,6 @@ components:
       - is_owned
       description: A custom model.
       title: CustomModel
-    GetModelResponse:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/CustomModel'
-      required:
-      - model
-      title: GetModelResponse
-    ModelsGetParametersScope:
-      type: string
-      enum:
-      - owned
-      - shared
-      title: ModelsGetParametersScope
-    ModelStatus:
-      type: string
-      enum:
-      - CREATING
-      - DRAFT
-      - TRAINING
-      - COMPLETED
-      - ERRORED
-      - ARCHIVED
-      description: The status of a custom model.
-      title: ModelStatus
     TrainModelV3Request:
       type: object
       properties:
@@ -253,6 +218,33 @@ components:
 
         '
       title: TrainModelV3Request
+    ModelsGetParametersScope:
+      type: string
+      enum:
+      - owned
+      - shared
+      title: ModelsGetParametersScope
+    TrainDatasetModelResponse:
+      type: object
+      properties:
+        model_id:
+          type: string
+          description: Unique identifier of the created model.
+        dataset_id:
+          type: string
+          description: Identifier of the dataset used for training.
+        training_status:
+          type: string
+          description: Current training status of the model.
+        model_name:
+          type: string
+          description: Name of the model.
+      required:
+      - model_id
+      - dataset_id
+      - training_status
+      - model_name
+      title: TrainDatasetModelResponse
     ListModelsResponse:
       type: object
       properties:
@@ -264,6 +256,14 @@ components:
       required:
       - models
       title: ListModelsResponse
+    GetModelResponse:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/CustomModel'
+      required:
+      - model
+      title: GetModelResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

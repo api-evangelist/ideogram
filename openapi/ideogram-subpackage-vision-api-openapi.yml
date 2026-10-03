@@ -65,6 +65,16 @@ paths:
               - image_file
 components:
   schemas:
+    DescribeResponse:
+      type: object
+      properties:
+        descriptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Description'
+          description: A collection of descriptions for given content.
+      description: The response for a describe request encapsulates a list of descriptions.
+      title: DescribeResponse
     ImageSafetyError:
       type: object
       properties:
@@ -88,16 +98,6 @@ components:
       default: V_3
       description: The model version to use for describing images. Defaults to V_3.
       title: DescribeModelVersion
-    DescribeResponse:
-      type: object
-      properties:
-        descriptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Description'
-          description: A collection of descriptions for given content.
-      description: The response for a describe request encapsulates a list of descriptions.
-      title: DescribeResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
