@@ -172,15 +172,45 @@ paths:
               - files
 components:
   schemas:
-    AssetType:
+    DatasetAssetFailureReason:
       type: string
       enum:
-      - ASSET
-      - CANVAS_ASSET
-      - LAYERED_ASSET
-      - RESPONSE
-      - UPLOAD
-      title: AssetType
+      - FAILED_SAFETY_CHECK
+      - FILE_TOO_LARGE
+      - INTERNAL_ERROR
+      - INVALID_CAPTION
+      - INVALID_IMAGE
+      - INVALID_ZIP
+      - TOO_MANY_IMAGES
+      description: Reason why an asset failed to upload.
+      title: DatasetAssetFailureReason
+    UploadDatasetAssetsResponse:
+      type: object
+      properties:
+        total_count:
+          type: integer
+          description: Total number of images processed.
+        success_count:
+          type: integer
+          description: Number of images successfully uploaded.
+        failure_count:
+          type: integer
+          description: Number of images that failed to upload.
+        successful_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadSucceededAsset'
+          description: Details of successfully uploaded assets.
+        failed_assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetUploadFailedAsset'
+          description: Details of assets that failed to upload.
+      required:
+      - total_count
+      - success_count
+      - failure_count
+      title: UploadDatasetAssetsResponse
     DatasetUploadSucceededAsset:
       type: object
       properties:
@@ -194,58 +224,15 @@ components:
       required:
       - asset_identifier
       title: DatasetUploadSucceededAsset
-    DatasetUploadFailedAsset:
+    CreateDatasetRequest:
       type: object
       properties:
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Original filename of the failed image.
-        failure_reason:
-          $ref: '#/components/schemas/DatasetAssetFailureReason'
+        name:
+          type: string
+          description: Name of the dataset.
       required:
-      - failure_reason
-      title: DatasetUploadFailedAsset
-    DatasetAssetFailureReason:
-      type: string
-      enum:
-      - FAILED_SAFETY_CHECK
-      - FILE_TOO_LARGE
-      - INTERNAL_ERROR
-      - INVALID_CAPTION
-      - INVALID_IMAGE
-      - INVALID_ZIP
-      - TOO_MANY_IMAGES
-      description: Reason why an asset failed to upload.
-      title: DatasetAssetFailureReason
-    GetDatasetResponse:
-      type: object
-      properties:
-        dataset:
-          $ref: '#/components/schemas/Dataset'
-        file_count:
-          type: integer
-          description: Total number of files in the dataset.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetFile'
-          description: List of files in the dataset.
-        custom_model_ids:
-          type: array
-          items:
-            type: string
-          description: 'IDs of all custom models trained from this dataset. Empty array if no model has been trained yet.
-
-            '
-      required:
-      - dataset
-      - file_count
-      - files
-      - custom_model_ids
-      description: Detailed view of a dataset, including its files.
-      title: GetDatasetResponse
+      - name
+      title: CreateDatasetRequest
     ListDatasetsResponse:
       type: object
       properties:
@@ -274,15 +261,31 @@ components:
       - file_name
       description: A file in a dataset.
       title: DatasetFile
-    CreateDatasetRequest:
+    DatasetUploadFailedAsset:
       type: object
       properties:
-        name:
-          type: string
-          description: Name of the dataset.
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the failed image.
+        failure_reason:
+          $ref: '#/components/schemas/DatasetAssetFailureReason'
       required:
-      - name
-      title: CreateDatasetRequest
+      - failure_reason
+      title: DatasetUploadFailedAsset
+    AssetIdentifier:
+      type: object
+      properties:
+        asset_type:
+          $ref: '#/components/schemas/AssetType'
+        asset_id:
+          type: string
+      required:
+      - asset_type
+      - asset_id
+      description: An identifier for an ideogram asset.
+      title: AssetIdentifier
     Dataset:
       type: object
       properties:
@@ -308,45 +311,42 @@ components:
       - creation_time
       description: A dataset for organizing training images.
       title: Dataset
-    UploadDatasetAssetsResponse:
+    AssetType:
+      type: string
+      enum:
+      - ASSET
+      - CANVAS_ASSET
+      - LAYERED_ASSET
+      - RESPONSE
+      - UPLOAD
+      title: AssetType
+    GetDatasetResponse:
       type: object
       properties:
-        total_count:
+        dataset:
+          $ref: '#/components/schemas/Dataset'
+        file_count:
           type: integer
-          description: Total number of images processed.
-        success_count:
-          type: integer
-          description: Number of images successfully uploaded.
-        failure_count:
-          type: integer
-          description: Number of images that failed to upload.
-        successful_assets:
+          description: Total number of files in the dataset.
+        files:
           type: array
           items:
-            $ref: '#/components/schemas/DatasetUploadSucceededAsset'
-          description: Details of successfully uploaded assets.
-        failed_assets:
+            $ref: '#/components/schemas/DatasetFile'
+          description: List of files in the dataset.
+        custom_model_ids:
           type: array
           items:
-            $ref: '#/components/schemas/DatasetUploadFailedAsset'
-          description: Details of assets that failed to upload.
+            type: string
+          description: 'IDs of all custom models trained from this dataset. Empty array if no model has been trained yet.
+
+            '
       required:
-      - total_count
-      - success_count
-      - failure_count
-      title: UploadDatasetAssetsResponse
-    AssetIdentifier:
-      type: object
-      properties:
-        asset_type:
-          $ref: '#/components/schemas/AssetType'
-        asset_id:
-          type: string
-      required:
-      - asset_type
-      - asset_id
-      description: An identifier for an ideogram asset.
-      title: AssetIdentifier
+      - dataset
+      - file_count
+      - files
+      - custom_model_ids
+      description: Detailed view of a dataset, including its files.
+      title: GetDatasetResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

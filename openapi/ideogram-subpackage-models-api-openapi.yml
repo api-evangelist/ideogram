@@ -137,17 +137,6 @@ paths:
                 description: Any type
 components:
   schemas:
-    ModelStatus:
-      type: string
-      enum:
-      - CREATING
-      - DRAFT
-      - TRAINING
-      - COMPLETED
-      - ERRORED
-      - ARCHIVED
-      description: The status of a custom model.
-      title: ModelStatus
     CustomModel:
       type: object
       properties:
@@ -200,6 +189,31 @@ components:
       - is_owned
       description: A custom model.
       title: CustomModel
+    ListModelsResponse:
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CustomModel'
+          description: List of models.
+      required:
+      - models
+      title: ListModelsResponse
+    ModelsGetParametersScope:
+      type: string
+      enum:
+      - owned
+      - shared
+      title: ModelsGetParametersScope
+    GetModelResponse:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/CustomModel'
+      required:
+      - model
+      title: GetModelResponse
     TrainModelV3Request:
       type: object
       properties:
@@ -218,12 +232,6 @@ components:
 
         '
       title: TrainModelV3Request
-    ModelsGetParametersScope:
-      type: string
-      enum:
-      - owned
-      - shared
-      title: ModelsGetParametersScope
     TrainDatasetModelResponse:
       type: object
       properties:
@@ -245,25 +253,17 @@ components:
       - training_status
       - model_name
       title: TrainDatasetModelResponse
-    ListModelsResponse:
-      type: object
-      properties:
-        models:
-          type: array
-          items:
-            $ref: '#/components/schemas/CustomModel'
-          description: List of models.
-      required:
-      - models
-      title: ListModelsResponse
-    GetModelResponse:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/CustomModel'
-      required:
-      - model
-      title: GetModelResponse
+    ModelStatus:
+      type: string
+      enum:
+      - CREATING
+      - DRAFT
+      - TRAINING
+      - COMPLETED
+      - ERRORED
+      - ARCHIVED
+      description: The status of a custom model.
+      title: ModelStatus
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
