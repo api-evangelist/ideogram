@@ -51,7 +51,7 @@ tags_raw:
   - Editing
   - Image-Generation
 created: '2026-05-08'
-modified: '2026-05-30'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: ideogram:ideogram-subpackage-datasets-api
@@ -123,6 +123,8 @@ apis:
   - type: Pricing
     url: https://ideogram.ai/features/api-pricing
 common:
+  - url: https://ideogram.ai/blog/
+    type: Blog
   - type: CapabilityMap
     url: capabilities/ideogram-capability-edges.yml
     name: Ideogram Business Capability Map
