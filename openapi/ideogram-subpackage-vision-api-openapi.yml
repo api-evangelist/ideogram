@@ -73,14 +73,6 @@ components:
       required:
       - error
       title: ImageSafetyError
-    DescribeModelVersion:
-      type: string
-      enum:
-      - V_2
-      - V_3
-      default: V_3
-      description: The model version to use for describing images. Defaults to V_3.
-      title: DescribeModelVersion
     DescribeResponse:
       type: object
       properties:
@@ -91,6 +83,14 @@ components:
           description: A collection of descriptions for given content.
       description: The response for a describe request encapsulates a list of descriptions.
       title: DescribeResponse
+    DescribeModelVersion:
+      type: string
+      enum:
+      - V_2
+      - V_3
+      default: V_3
+      description: The model version to use for describing images. Defaults to V_3.
+      title: DescribeModelVersion
     Description:
       type: object
       properties:

@@ -172,18 +172,6 @@ paths:
               - files
 components:
   schemas:
-    DatasetAssetFailureReason:
-      type: string
-      enum:
-      - FAILED_SAFETY_CHECK
-      - FILE_TOO_LARGE
-      - INTERNAL_ERROR
-      - INVALID_CAPTION
-      - INVALID_IMAGE
-      - INVALID_ZIP
-      - TOO_MANY_IMAGES
-      description: Reason why an asset failed to upload.
-      title: DatasetAssetFailureReason
     UploadDatasetAssetsResponse:
       type: object
       properties:
@@ -211,19 +199,57 @@ components:
       - success_count
       - failure_count
       title: UploadDatasetAssetsResponse
-    DatasetUploadSucceededAsset:
+    DatasetAssetFailureReason:
+      type: string
+      enum:
+      - FAILED_SAFETY_CHECK
+      - FILE_TOO_LARGE
+      - INTERNAL_ERROR
+      - INVALID_CAPTION
+      - INVALID_IMAGE
+      - INVALID_ZIP
+      - TOO_MANY_IMAGES
+      description: Reason why an asset failed to upload.
+      title: DatasetAssetFailureReason
+    GetDatasetResponse:
       type: object
       properties:
-        asset_identifier:
-          $ref: '#/components/schemas/AssetIdentifier'
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Original filename of the uploaded image.
+        dataset:
+          $ref: '#/components/schemas/Dataset'
+        file_count:
+          type: integer
+          description: Total number of files in the dataset.
+        files:
+          type: array
+          items:
+            $ref: '#/components/schemas/DatasetFile'
+          description: List of files in the dataset.
+        custom_model_ids:
+          type: array
+          items:
+            type: string
+          description: 'IDs of all custom models trained from this dataset. Empty array if no model has been trained yet.
+
+            '
       required:
-      - asset_identifier
-      title: DatasetUploadSucceededAsset
+      - dataset
+      - file_count
+      - files
+      - custom_model_ids
+      description: Detailed view of a dataset, including its files.
+      title: GetDatasetResponse
+    AssetIdentifier:
+      type: object
+      properties:
+        asset_type:
+          $ref: '#/components/schemas/AssetType'
+        asset_id:
+          type: string
+      required:
+      - asset_type
+      - asset_id
+      description: An identifier for an ideogram asset.
+      title: AssetIdentifier
     CreateDatasetRequest:
       type: object
       properties:
@@ -261,31 +287,6 @@ components:
       - file_name
       description: A file in a dataset.
       title: DatasetFile
-    DatasetUploadFailedAsset:
-      type: object
-      properties:
-        file_name:
-          type:
-          - string
-          - 'null'
-          description: Original filename of the failed image.
-        failure_reason:
-          $ref: '#/components/schemas/DatasetAssetFailureReason'
-      required:
-      - failure_reason
-      title: DatasetUploadFailedAsset
-    AssetIdentifier:
-      type: object
-      properties:
-        asset_type:
-          $ref: '#/components/schemas/AssetType'
-        asset_id:
-          type: string
-      required:
-      - asset_type
-      - asset_id
-      description: An identifier for an ideogram asset.
-      title: AssetIdentifier
     Dataset:
       type: object
       properties:
@@ -320,33 +321,32 @@ components:
       - RESPONSE
       - UPLOAD
       title: AssetType
-    GetDatasetResponse:
+    DatasetUploadFailedAsset:
       type: object
       properties:
-        dataset:
-          $ref: '#/components/schemas/Dataset'
-        file_count:
-          type: integer
-          description: Total number of files in the dataset.
-        files:
-          type: array
-          items:
-            $ref: '#/components/schemas/DatasetFile'
-          description: List of files in the dataset.
-        custom_model_ids:
-          type: array
-          items:
-            type: string
-          description: 'IDs of all custom models trained from this dataset. Empty array if no model has been trained yet.
-
-            '
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the failed image.
+        failure_reason:
+          $ref: '#/components/schemas/DatasetAssetFailureReason'
       required:
-      - dataset
-      - file_count
-      - files
-      - custom_model_ids
-      description: Detailed view of a dataset, including its files.
-      title: GetDatasetResponse
+      - failure_reason
+      title: DatasetUploadFailedAsset
+    DatasetUploadSucceededAsset:
+      type: object
+      properties:
+        asset_identifier:
+          $ref: '#/components/schemas/AssetIdentifier'
+        file_name:
+          type:
+          - string
+          - 'null'
+          description: Original filename of the uploaded image.
+      required:
+      - asset_identifier
+      title: DatasetUploadSucceededAsset
   securitySchemes:
     ApiKeyAuth:
       type: apiKey

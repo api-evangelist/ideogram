@@ -200,38 +200,6 @@ components:
       required:
       - models
       title: ListModelsResponse
-    ModelsGetParametersScope:
-      type: string
-      enum:
-      - owned
-      - shared
-      title: ModelsGetParametersScope
-    GetModelResponse:
-      type: object
-      properties:
-        model:
-          $ref: '#/components/schemas/CustomModel'
-      required:
-      - model
-      title: GetModelResponse
-    TrainModelV3Request:
-      type: object
-      properties:
-        dataset_id:
-          type: string
-          description: ID of the dataset to train the model from.
-        model_name:
-          type: string
-          description: 'Name for the trained model. Must be 5-30 characters, alphanumeric with spaces and hyphens allowed.
-
-            '
-      required:
-      - dataset_id
-      - model_name
-      description: 'Training request for a custom Ideogram v3 model using default hyperparameters.
-
-        '
-      title: TrainModelV3Request
     TrainDatasetModelResponse:
       type: object
       properties:
@@ -253,6 +221,30 @@ components:
       - training_status
       - model_name
       title: TrainDatasetModelResponse
+    TrainModelV3Request:
+      type: object
+      properties:
+        dataset_id:
+          type: string
+          description: ID of the dataset to train the model from.
+        model_name:
+          type: string
+          description: 'Name for the trained model. Must be 5-30 characters, alphanumeric with spaces and hyphens allowed.
+
+            '
+      required:
+      - dataset_id
+      - model_name
+      description: 'Training request for a custom Ideogram v3 model using default hyperparameters.
+
+        '
+      title: TrainModelV3Request
+    ModelsGetParametersScope:
+      type: string
+      enum:
+      - owned
+      - shared
+      title: ModelsGetParametersScope
     ModelStatus:
       type: string
       enum:
@@ -264,6 +256,14 @@ components:
       - ARCHIVED
       description: The status of a custom model.
       title: ModelStatus
+    GetModelResponse:
+      type: object
+      properties:
+        model:
+          $ref: '#/components/schemas/CustomModel'
+      required:
+      - model
+      title: GetModelResponse
   securitySchemes:
     ApiKeyAuth:
       type: apiKey
