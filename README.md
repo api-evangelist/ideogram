@@ -1,4 +1,4 @@
-# Ideogram (ideogram)
+# Ideogram
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,60 +66,130 @@
 
 Ideogram is an image generation platform notable for industry-leading text-in-image rendering. The Ideogram API (3.0 and beyond) supports generation, edit, inpaint, remix, reframe, replace background, layerize text, upscale, describe, and remove background, plus custom model training with dataset and asset management. Authenticated REST API with published OpenAPI 3.1 spec.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/ideogram/refs/heads/main/apis.yml)
+**Areas:** Artificial Intelligence · Image Generation · Text · Realistic · Editing
 
-## Tags
+## Ideogram on APIs.io
 
-- AI
-- Image Generation
-- Text
-- Realistic
-- Editing
+Everything profiled for Ideogram is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/ideogram/](https://apis.io/providers/ideogram/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (4)
 
-- **Created:** 2026-05-08
-- **Modified:** 2026-05-30
+- [Ideogram Subpackage Datasets API](https://apis.io/apis/ideogram/ideogram-subpackage-datasets-api/) — The subpackage_datasets API from Ideogram — 3 operation(s) for subpackage_datasets.
+- [Ideogram Subpackage Generate API](https://apis.io/apis/ideogram/ideogram-subpackage-generate-api/) — The subpackage_generate API from Ideogram — 15 operation(s) for subpackage_generate.
+- [Ideogram Subpackage Models API](https://apis.io/apis/ideogram/ideogram-subpackage-models-api/) — The subpackage_models API from Ideogram — 3 operation(s) for subpackage_models.
+- [Ideogram Subpackage Vision API](https://apis.io/apis/ideogram/ideogram-subpackage-vision-api/) — The subpackage_vision API from Ideogram — 1 operation(s) for subpackage_vision.
 
-## APIs
+### Published properties
 
-### Ideogram API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-REST API at https://api.ideogram.ai for image generation, editing, training, and analysis. Endpoints include /v1/ideogram-v3/generate, edit, inpaint, remix, reframe, replace-background, layerize-text, upscale, describe, remove-background, and dataset + custom-model training endpoints. OpenAPI 3.1 published at developer.ideogram.ai.
+#### MCP servers (1)
 
-- **Human URL:** [https://docs.ideogram.ai/](https://docs.ideogram.ai/)
-- **Base URL:** `https://api.ideogram.ai`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [ideogram](https://apis.io/servers/ideogram/ideogram/)
 
-- Image Generation
-- Editing
-- Inpainting
-- Custom Models
-- Text-in-Image
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.ideogram.ai/)
-- [OpenAPI](openapi/ideogram-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/ideogram.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/ideogram.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-- [Sign Up](https://developer.ideogram.ai/)
-- [Pricing](https://ideogram.ai/features/api-pricing)
+- [Ideogram Agentic Access](https://apis.io/agentic-access/ideogram/ideogram-agentic-access/)
 
-## Common Properties
+#### Collections (5)
 
-- [GitHub Organization](https://github.com/ideogram-ai)
-- [LinkedIn](https://www.linkedin.com/company/ideogram-ai)
+Postman and Open Collection request collections.
+
+- [API Reference](https://apis.io/collections/ideogram/open-ideogram/)
+- [API Reference subpackage_datasets API](https://apis.io/collections/ideogram/open-ideogram-subpackage-datasets-api/)
+- [API Reference subpackage_datasets subpackage_generate API](https://apis.io/collections/ideogram/open-ideogram-subpackage-generate-api/)
+- [API Reference subpackage_datasets subpackage_models API](https://apis.io/collections/ideogram/open-ideogram-subpackage-models-api/)
+- [API Reference subpackage_datasets subpackage_vision API](https://apis.io/collections/ideogram/open-ideogram-subpackage-vision-api/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Ideogram Authentication](https://apis.io/security/ideogram/ideogram-authentication/)
+- [Ideogram Domain Security](https://apis.io/security/ideogram/ideogram-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Ideogram Plans Pricing](https://apis.io/plans/ideogram/ideogram-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Ideogram Rate Limits](https://apis.io/rate-limits/ideogram/ideogram-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Ideogram Finops](https://apis.io/finops/ideogram/ideogram-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://ideogram.ai/)
 - [Documentation](https://docs.ideogram.ai/)
-- [OpenAPI](openapi/ideogram-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Plans](plans/ideogram-plans-pricing.yml)
-- [Rate Limits](rate-limits/ideogram-rate-limits.yml)
-- [Fin Ops](finops/ideogram-finops.yml)
-- [L L Ms Txt](https://docs.ideogram.ai/llms.txt)
+- [Blog](https://ideogram.ai/blog/)
+- [GitHub](https://github.com/ideogram-ai)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 24.8** — emerging · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 30.0 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 23.8 |
+| Access clarity | 28.9 |
+
+**Agent readiness 42.7** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | — |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 10.9** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/ideogram/](https://apis.io/providers/ideogram/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Ideogram: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/ideogram/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
